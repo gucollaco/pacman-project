@@ -1,0 +1,5 @@
+0 - common pellet
+1 - blue cube
+2 - power pellet
+3 - yellow cube
+9 - blank space
