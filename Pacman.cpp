@@ -2,19 +2,8 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
-#include "Point.cpp"
 
-<<<<<<< HEAD
-class Pacman : public Point {
-    private:
-        GLUquadricObj *object;
-    public:
-        Pacman(float valX, float valY);
-        void draw();
-};
-=======
 #include "Pacman.h"
->>>>>>> 130267e749cd49d8d36162684cf476a88adc0a80
 
 Pacman::Pacman(float valX, float valY) : Point(valX, valY) {
     this->setX(valX);
