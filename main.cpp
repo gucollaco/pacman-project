@@ -44,7 +44,7 @@ void initPacman(){
     Pac = new Pacman(350, 170);
 }
 
-void init(){
+void init() {
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f); //define a cor de fundo
     glEnable(GL_DEPTH_TEST); //habilita o teste de profundidade
 
