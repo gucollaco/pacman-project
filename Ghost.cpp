@@ -1,15 +1,5 @@
-#include <GL/glut.h>
-#include "Point.cpp"
 
-class Ghost : public Point{
-    private:
-        int r, g, b;
-        bool isReversed;
-        GLUquadricObj *object;
-    public:
-        Ghost(int valX, int valY, int valR, int valG, int valB, bool rev);
-        void draw();
-};
+#include "Ghost.h"
 
 Ghost::Ghost(int valX, int valY, int valR, int valG, int valB, bool rev) : Point(valX, valY) {
     this->r = valR;

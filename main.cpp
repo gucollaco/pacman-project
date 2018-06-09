@@ -1,14 +1,18 @@
 #include <stdio.h>
 #include <math.h>
-#include <GL/glut.h>
-#include "Maze.cpp"
-#include "Ghost.cpp"
-#include "Pacman.cpp"
+
+#include "Maze.h"
+#include "Ghost.h"
+#include "Pacman.h"
 
 typedef struct Pos {
     float x;
     float y;
 }Pos;
+
+int inside2(float value){
+    return static_cast<int>((value + 12.5) / 25);
+}
 
 double rx = 0, ry = 0, rz = 0;
 
@@ -62,19 +66,19 @@ void init(){
 #define RIGHT 4
 
 int canIncrease(Maze *maze, float x, float y, int direcao){
-    int l = inside(x);
-    int c = inside(y);
+    int l = inside2(x);
+    int c = inside2(y);
     int v1, v2, v3;
     if(direcao == UP){
         v1 = maze->getValue(l-1, c+1);
         v2 = maze->getValue(l, c+1);
         v3 = maze->getValue(l+1, c+1);
-        if( c < inside(y+7.5) ){
+        if( c < inside2(y+7.5) ){
             if(v2 == 1)
                 return 0;
-            if(v3 == 1 && l < inside(x+7.25) )
+            if(v3 == 1 && l < inside2(x+7.25) )
                 return 0;
-            if(v1 == 1 && l > inside(x-7.25) )
+            if(v1 == 1 && l > inside2(x-7.25) )
                 return 0;
         }
     }
@@ -82,12 +86,12 @@ int canIncrease(Maze *maze, float x, float y, int direcao){
         v1 = maze->getValue(l-1, c-1);
         v2 = maze->getValue(l, c-1);
         v3 = maze->getValue(l+1, c-1);
-        if( c > inside(y-7.6) ){
+        if( c > inside2(y-7.6) ){
             if(v2 == 1)
                 return 0;
-            if(v3 == 1 && l < inside(x+7.25) )
+            if(v3 == 1 && l < inside2(x+7.25) )
                 return 0;
-            if(v1 == 1 && l > inside(x-7.25) )
+            if(v1 == 1 && l > inside2(x-7.25) )
                 return 0;
         }
     }
@@ -95,12 +99,12 @@ int canIncrease(Maze *maze, float x, float y, int direcao){
         v1 = maze->getValue(l-1, c-1);
         v2 = maze->getValue(l-1, c);
         v3 = maze->getValue(l-1, c+1);
-        if( l > inside(x-7.6) ){
+        if( l > inside2(x-7.6) ){
             if(v2 == 1)
                 return 0;
-            if(v3 == 1 && c < inside(y+7.25) )
+            if(v3 == 1 && c < inside2(y+7.25) )
                 return 0;
-            if(v1 == 1 && c > inside(y-7.25) )
+            if(v1 == 1 && c > inside2(y-7.25) )
                 return 0;
         }
     }
@@ -108,12 +112,12 @@ int canIncrease(Maze *maze, float x, float y, int direcao){
         v1 = maze->getValue(l+1, c-1);
         v2 = maze->getValue(l+1, c);
         v3 = maze->getValue(l+1, c+1);
-        if( l < inside(x+7.6) ){
+        if( l < inside2(x+7.6) ){
             if(v2 == 1)
                 return 0;
-            if(v3 == 1 && c < inside(y+7.25) )
+            if(v3 == 1 && c < inside2(y+7.25) )
                 return 0;
-            if(v1 == 1 && c > inside(y-7.25) )
+            if(v1 == 1 && c > inside2(y-7.25) )
                 return 0;
         }
     }

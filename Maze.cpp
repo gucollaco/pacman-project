@@ -1,26 +1,7 @@
-#include <stdio.h>
-#include <GL/glut.h>
-#include "Pellet.cpp"
 
-/*-----------------------------
- * Define estrutura de Maze.
-------------------------------*/
-class Maze{
-private:
-    int **value;     // S�o atributos
-    int lin, col;
-    Pellet *normal, *power;
-public:
-    Maze(char *path);
-    Maze(int lines, int columns);
-    void alloc(int lines, int columns);
-    void setValue(int line, int column, int value);
-    int getValue(int line, int column);
-    void setPellets(Pellet *normal, Pellet *power);
-    void colisaoPellet(float x, float y, float r);
-    void show();
-    void draw();
-};
+#include <iosfwd>
+#include <sstream>
+#include "Maze.h"
 
 Maze::Maze(int line, int column){
     this->alloc(line, column);
@@ -35,9 +16,7 @@ int circ(float x, float y, float r, float x1, float y1){
 }
 
 int inside(float value){
-    float res = value + 12.5;
-    res = res/25;
-    return res;
+    return static_cast<int>((value + 12.5) / 25);
 }
 
 void Maze::colisaoPellet(float x, float y, float r){
@@ -58,11 +37,22 @@ void Maze::colisaoPellet(float x, float y, float r){
  * Instancia um Maze a partir
  * de um arquivo texto
 ------------------------------*/
-Maze::Maze(char *path){
-    FILE *temp = fopen(path, "r");
+Maze::Maze(char *path_char){
     int i, j;
-//    printf("%s\n", path);
-    if(temp == NULL) printf("erro arquivo\n");
+    std::string path(path_char);
+
+    FILE *temp = fopen(path.c_str(), "r");
+    while(temp == NULL){
+        printf("Coundn't find maze file, trying again...\n");
+
+        std::stringstream ss;
+        ss << "../" << path;
+        path = ss.str();
+        printf("Trying at <%s>", path);
+
+        temp = fopen(path.c_str(), "r");
+    }
+
     fscanf(temp, "%d %d",&i, &j);
     this->alloc(i, j);
     for(i = 0; i < this->lin; i++){
