@@ -1,8 +1,20 @@
-//
-// Created by dsalexan on 08/06/2018.
-//
+#ifndef _GHOST_H_
+#define _GHOST_H_
 
-#ifndef PACMAN_PROJECT_GHOST_H
-#define PACMAN_PROJECT_GHOST_H
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
 
-#endif //PACMAN_PROJECT_GHOST_H
+#include "Point.h"
+
+class Ghost : public Point{
+private:
+    int r, g, b;
+    bool isReversed;
+    GLUquadricObj *object;
+public:
+    Ghost(int valX, int valY, int valR, int valG, int valB, bool rev);
+    void draw();
+};
+
+#endif

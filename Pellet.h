@@ -1,8 +1,21 @@
-//
-// Created by dsalexan on 08/06/2018.
-//
+#ifndef _PELLET_H_
+#define _PELLET_H_
 
-#ifndef PACMAN_PROJECT_PELLET_H
-#define PACMAN_PROJECT_PELLET_H
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
+#include "Point.h"
 
-#endif //PACMAN_PROJECT_PELLET_H
+class Pellet : public Point{
+private:
+    float radius;
+    GLUquadricObj *object;
+public:
+    Pellet(float valRadius);
+    float getRadius();
+    void setRadius(float valRadius);
+    void draw();
+};
+
+
+#endif

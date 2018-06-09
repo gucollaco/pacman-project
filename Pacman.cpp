@@ -1,17 +1,9 @@
+
+#include <GL/gl.h>
+#include <GL/glu.h>
 #include <GL/glut.h>
 
-class Pacman {
-    private:
-        float x, y;
-        GLUquadricObj *object;
-    public:
-        Pacman(float valX, float valY);
-        float getX();
-        float getY();
-        void setX(float valX);
-        void setY(float valY);
-        void draw(float valX, float valY);
-};
+#include "Pacman.h"
 
 Pacman::Pacman(float valX, float valY) {
     x = valX;

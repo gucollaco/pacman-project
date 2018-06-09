@@ -1,17 +1,6 @@
-#ifndef  __POINT_CPP__
-#define  __POINT_CPP__
 
-class Point {
-    private:
-        float x, y;
-    public:
-        Point(float x, float y);
-        void setX(float x);
-        void setY(float y);
-        void setPoint(float x, float y);
-        float getX();
-        float getY();
-};
+#include "Point.h"
+
 Point::Point(float x, float y){
     this->setPoint(x, y);
 }
@@ -31,5 +20,3 @@ float Point::getX(){
 float Point::getY(){
     return this->y;
 }
-
-#endif

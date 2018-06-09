@@ -1,8 +1,16 @@
-//
-// Created by dsalexan on 08/06/2018.
-//
+#ifndef _POINT_H_
+#define _POINT_H_
 
-#ifndef PACMAN_PROJECT_POINT_H
-#define PACMAN_PROJECT_POINT_H
+class Point {
+    private:
+        float x, y;
+    public:
+        Point(float x, float y);
+        void setX(float x);
+        void setY(float y);
+        void setPoint(float x, float y);
+        float getX();
+        float getY();
+};
 
-#endif //PACMAN_PROJECT_POINT_H
+#endif

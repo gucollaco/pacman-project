@@ -1,16 +1,4 @@
-#include <GL/glut.h>
-#include "Point.cpp"
-
-class Pellet : public Point{
-    private:
-        float radius;
-        GLUquadricObj *object;
-    public:
-        Pellet(float valRadius);
-        float getRadius();
-        void setRadius(float valRadius);
-        void draw();
-};
+#include "Pellet.h"
 
 Pellet::Pellet(float valRadius) : Point(0, 0){
     this->radius = valRadius;
