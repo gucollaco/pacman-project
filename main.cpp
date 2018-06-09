@@ -27,7 +27,7 @@ Ghost *GhoInky;
 Ghost *GhoPinky;
 Pacman *Pac;
 
-void initPacman(){
+void initPacman() {
     char arq[] = "Matrix.txt";
     Pos posBlinky = {225, 285};
     Pos posClyde = {285, 335};
