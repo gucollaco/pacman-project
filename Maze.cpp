@@ -135,3 +135,62 @@ void Maze::setPellets(Pellet *normal, Pellet *power){
     this->normal = normal;
     this->power = power;
 }
+
+bool Maze::canIncrease(Maze *maze, float x, float y, int direcao){
+    int l = inside(x);
+    int c = inside(y);
+    int v1, v2, v3;
+    if(direcao == MAZE_UP){
+        v1 = maze->getValue(l-1, c+1);
+        v2 = maze->getValue(l, c+1);
+        v3 = maze->getValue(l+1, c+1);
+        if( c < inside(y+7.5) ){
+            if(v2 == 1)
+                return 0;
+            if(v3 == 1 && l < inside(x+7.25) )
+                return 0;
+            if(v1 == 1 && l > inside(x-7.25) )
+                return 0;
+        }
+    }
+    if(direcao == MAZE_DOWN){
+        v1 = maze->getValue(l-1, c-1);
+        v2 = maze->getValue(l, c-1);
+        v3 = maze->getValue(l+1, c-1);
+        if( c > inside(y-7.6) ){
+            if(v2 == 1)
+                return 0;
+            if(v3 == 1 && l < inside(x+7.25) )
+                return 0;
+            if(v1 == 1 && l > inside(x-7.25) )
+                return 0;
+        }
+    }
+    if(direcao == MAZE_LEFT){
+        v1 = maze->getValue(l-1, c-1);
+        v2 = maze->getValue(l-1, c);
+        v3 = maze->getValue(l-1, c+1);
+        if( l > inside(x-7.6) ){
+            if(v2 == 1)
+                return 0;
+            if(v3 == 1 && c < inside(y+7.25) )
+                return 0;
+            if(v1 == 1 && c > inside(y-7.25) )
+                return 0;
+        }
+    }
+    if(direcao == MAZE_RIGHT){
+        v1 = maze->getValue(l+1, c-1);
+        v2 = maze->getValue(l+1, c);
+        v3 = maze->getValue(l+1, c+1);
+        if( l < inside(x+7.6) ){
+            if(v2 == 1)
+                return 0;
+            if(v3 == 1 && c < inside(y+7.25) )
+                return 0;
+            if(v1 == 1 && c > inside(y-7.25) )
+                return 0;
+        }
+    }
+    return 1;
+}
