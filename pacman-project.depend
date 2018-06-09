@@ -255,3 +255,29 @@
 
 1528396120 d:\gustavo\desktop\software development\pacman-project\pacman.cpp
 
+1528475092 source:d:\gustavo\downloads\pacman-project\main.cpp
+	<stdio.h>
+	<math.h>
+	<GL/glut.h>
+	"Maze.cpp"
+	"Ghost.cpp"
+	"Pacman.cpp"
+
+1528475092 d:\gustavo\downloads\pacman-project\maze.cpp
+	<stdio.h>
+	<GL/glut.h>
+	"Pellet.cpp"
+
+1528475094 d:\gustavo\downloads\pacman-project\pellet.cpp
+	<GL/glut.h>
+	"Point.cpp"
+
+1528502503 d:\gustavo\downloads\pacman-project\point.cpp
+
+1528502350 d:\gustavo\downloads\pacman-project\ghost.cpp
+	<GL/glut.h>
+	"Point.cpp"
+
+1528475092 d:\gustavo\downloads\pacman-project\pacman.cpp
+	<GL/glut.h>
+

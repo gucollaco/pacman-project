@@ -1,47 +1,33 @@
 #include <GL/glut.h>
+#include "Point.cpp"
 
-class Pellet {
+class Pellet : public Point{
     private:
-        int x, y, r;
+        float radius;
         GLUquadricObj *object;
     public:
-        Pellet(int valX, int valY, int valr) {
-            x = valX;
-            y = valY;
-            r = valr;
-            object = gluNewQuadric();
-        }
-
-        int getX() {
-            return x;
-        }
-
-        int getY() {
-            return y;
-        }
-
-        int getR() {
-            return r;
-        }
-
-        void setX(int valX) {
-            x = valX;
-        }
-
-        void setR(int valr) {
-            x = valr;
-        }
-
-        void setY(int valY) {
-            y = valY;
-        }
-
-        void draw(int valX, int valY) {
-            glPushMatrix();
-                setX(valX);
-                setY(valY);
-                glTranslatef(x, y, 0);
-                gluSphere(object, r, 20, 20);
-            glPopMatrix();
-        }
+        Pellet(float valRadius);
+        float getRadius();
+        void setRadius(float valRadius);
+        void draw();
 };
+
+Pellet::Pellet(float valRadius) : Point(0, 0){
+    this->radius = valRadius;
+    this->object = gluNewQuadric();
+}
+
+float Pellet::getRadius() {
+    return this->radius;
+}
+
+void Pellet::setRadius(float valRadius) {
+    this->radius = valRadius;
+}
+
+void Pellet::draw() {
+    glPushMatrix();
+        glTranslatef(this->getX(), this->getY(), 0);
+        gluSphere(object, radius, 20, 20);
+    glPopMatrix();
+}

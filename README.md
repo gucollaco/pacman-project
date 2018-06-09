@@ -1,2 +1,0 @@
-# pacman-project
-University project. 3D version of pacman.

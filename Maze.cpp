@@ -3,31 +3,58 @@
 #include "Pellet.cpp"
 
 /*-----------------------------
- * Define estrutura de matriz.
+ * Define estrutura de Maze.
 ------------------------------*/
-struct Matrix{
+class Maze{
 private:
-    int **value;     // São atributos
+    int **value;     // Sï¿½o atributos
     int lin, col;
+    Pellet *normal, *power;
 public:
-    Matrix(char *path);
-    Matrix(int lines, int columns);
+    Maze(char *path);
+    Maze(int lines, int columns);
     void alloc(int lines, int columns);
-    void setValor(int line, int column, int value);
+    void setValue(int line, int column, int value);
     int getValue(int line, int column);
+    void setPellets(Pellet *normal, Pellet *power);
+    void colisaoPellet(float x, float y, float r);
     void show();
-    void draw(Pellet *pel, Pellet *ppel);
+    void draw();
 };
 
-Matrix::Matrix(int line, int column){
+Maze::Maze(int line, int column){
     this->alloc(line, column);
+    normal = NULL;
+    power = NULL;
+}
+
+int circ(float x, float y, float r, float x1, float y1){
+    float dx = x - (x1);
+    float dy = y - (y1);
+    return dx*dx + dy*dy <= r*r;
+}
+
+int inside(float value){
+    float res = value + 12.5;
+    res = res/25;
+    return res;
+}
+
+void Maze::colisaoPellet(float x, float y, float r){
+    int l = inside(x);
+    int c = inside(y);
+    float x1 = 25*l;
+    float y1 = 25*c;
+    float dx = x - x1;
+    float dy = y - y1;
+    if (dx*dx + dy*dy <= r*r) this->setValue(l, c, 9);
 }
 
 /*------------------------------
- * Instancia uma matriz a partir
+ * Instancia um Maze a partir
  * de um arquivo texto
 ------------------------------*/
-Matrix::Matrix(char *path){
+Maze::Maze(char *path){
     FILE *temp = fopen(path, "r");
     int i, j;
 //    printf("%s\n", path);
@@ -39,13 +66,15 @@ Matrix::Matrix(char *path){
             fscanf(temp, "%d", &this->value[i][j]);
         }
     }
+    normal = NULL;
+    power = NULL;
 }
 
 /*-----------------------------
- * Cria matriz com o numero de
+ * Cria Maze com o numero de
  * lines = lin e columns = col
 ------------------------------*/
-void Matrix::alloc(int lin, int col){
+void Maze::alloc(int lin, int col){
     int i;
     this->value = (int**) malloc(sizeof(int*)*lin);
     for(i = 0; i < lin; i++){
@@ -55,19 +84,15 @@ void Matrix::alloc(int lin, int col){
     this->col = col;
 }
 
-
-void Matrix::draw(Pellet *pel, Pellet *ppel){
+void Maze::draw(){
     int i, j;
     for(i = 0; i < this->lin; i++){
         for(j = 0; j < this->col; j++){
             switch(this->getValue(i, j)){
             case 0:
                 glColor3ub(230, 220, 175);
-                glPushMatrix();
-                glTranslatef(i*25, j*25, 0);
-                glutSolidSphere(5, 20, 20);
-                glPopMatrix();
-                pel->draw(i*25, j*25);
+                normal->setPoint(i*25, j*25);
+                normal->draw();
                 break;
             case 1:
                 glColor3ub(0, 0, 255);
@@ -78,11 +103,8 @@ void Matrix::draw(Pellet *pel, Pellet *ppel){
                 break;
             case 2:
                 glColor3ub(205, 130, 65);
-                glPushMatrix();
-                glTranslatef(i*25, j*25, 0);
-                glutSolidSphere(7, 20, 20);
-                glPopMatrix();
-                ppel->draw(i*25, j*25);
+                power->setPoint(i*25, j*25);
+                power->draw();
                 break;
             case 3:
                 glColor3ub(255, 255, 0);
@@ -97,15 +119,15 @@ void Matrix::draw(Pellet *pel, Pellet *ppel){
     glColor3ub(0, 0, 255);
 }
 
-void Matrix::setValor(int line, int column, int value){
+void Maze::setValue(int line, int column, int value){
     this->value[line][column] = value;
 }
 
-int Matrix::getValue(int line, int column){
+int Maze::getValue(int line, int column){
     return value[line][column];
 }
 
-void Matrix::show(){
+void Maze::show(){
     int i, j;
     for(i = 0; i < this->lin; i++){
         for(j = 0; j < this->col; j++){
@@ -113,4 +135,9 @@ void Matrix::show(){
         }
         printf("\n");
     }
+}
+
+void Maze::setPellets(Pellet *normal, Pellet *power){
+    this->normal = normal;
+    this->power = power;
 }
