@@ -1,3 +1,6 @@
+
+#include <GL/gl.h>
+#include <GL/glu.h>
 #include <GL/glut.h>
 #include "Point.cpp"
 
@@ -10,6 +13,7 @@ class Pacman : public Point {
         void draw();
 };
 =======
+#include "Pacman.h"
 >>>>>>> 130267e749cd49d8d36162684cf476a88adc0a80
 
 Pacman::Pacman(float valX, float valY) : Point(valX, valY) {
