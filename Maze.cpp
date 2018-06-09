@@ -2,6 +2,7 @@
 #include <iosfwd>
 #include <sstream>
 #include "Maze.h"
+#include "Color.h"
 
 Maze::Maze(int line, int column){
     this->alloc(line, column);
@@ -80,24 +81,24 @@ void Maze::draw(){
         for(j = 0; j < this->col; j++){
             switch(this->getValue(i, j)){
             case 0:
-                glColor3ub(230, 220, 175);
+                glColor(SAND);
                 normal->setPoint(i*25, j*25);
                 normal->draw();
                 break;
             case 1:
-                glColor3ub(0, 0, 255);
+                glColor(GREEN);
                 glPushMatrix();
                 glTranslated(i*25, j*25, 0);
                 glutSolidCube(25);
                 glPopMatrix();
                 break;
             case 2:
-                glColor3ub(205, 130, 65);
+                glColor(BROWN_BEIGE);
                 power->setPoint(i*25, j*25);
                 power->draw();
                 break;
             case 3:
-                glColor3ub(255, 255, 0);
+                glColor(YELLOW);
                 glPushMatrix();
                 glTranslated(i*25, j*25, 0);
                 glutSolidCube(25);

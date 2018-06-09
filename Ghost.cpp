@@ -2,9 +2,29 @@
 #include "Ghost.h"
 
 Ghost::Ghost(int valX, int valY, int valR, int valG, int valB, bool rev) : Point(valX, valY) {
-    this->r = valR;
-    this->g = valG;
-    this->b = valB;
+    this->color.r = valR;
+    this->color.g = valG;
+    this->color.b = valB;
+    this->isReversed = rev;
+    this->object = gluNewQuadric();
+}
+
+Ghost::Ghost(int valX, int valY, Color valColor, bool rev) : Point(valX, valY) {
+    this->color = valColor;
+    this->isReversed = rev;
+    this->object = gluNewQuadric();
+}
+
+Ghost::Ghost(Point valPoint, int valR, int valG, int valB, bool rev) : Point(valPoint.getX(), valPoint.getY()) {
+    this->color.r = valR;
+    this->color.g = valG;
+    this->color.b = valB;
+    this->isReversed = rev;
+    this->object = gluNewQuadric();
+}
+
+Ghost::Ghost(Point valPoint, Color valColor, bool rev) : Point(valPoint.getX(), valPoint.getY()) {
+    this->color = valColor;
     this->isReversed = rev;
     this->object = gluNewQuadric();
 }
@@ -23,7 +43,7 @@ void Ghost::draw() {
         glPushMatrix();
             glTranslatef(0.0, 2.0, 0.0);
             //ghost body
-            glColor3ub(this->r, this->g, this->b);
+            glColor3ub(this->color.r, this->color.g, this->color.b);
             glPushMatrix();
                 glRotatef(90.0, 1.0, 0.0, 0.0);
                 gluSphere(this->object, 8, 50, 10);
@@ -65,7 +85,7 @@ void Ghost::draw() {
             }
 
             //ghost leg - central leg
-            glColor3ub(this->r, this->g, this->b);
+            glColor3ub(this->color.r, this->color.g, this->color.b);
             glPushMatrix();
                 glTranslatef(0.0, -12.0, 0.0);
                 glPushMatrix();
@@ -79,7 +99,7 @@ void Ghost::draw() {
             glPopMatrix();
 
             //ghost leg - other legs
-            glColor3ub(this->r, this->g, this->b);
+            glColor3ub(this->color.r, this->color.g, this->color.b);
             glPushMatrix();
 //                        aniRate = !(ghost.isReversed) ? 1.5 : 3.0;
 //                        glRotatef(animation, 0, 1, 0);

@@ -6,14 +6,19 @@
 #include <GL/glut.h>
 
 #include "Point.h"
+#include "Color.h"
 
 class Ghost : public Point{
 private:
-    int r, g, b;
+    Color color;
     bool isReversed;
     GLUquadricObj *object;
 public:
     Ghost(int valX, int valY, int valR, int valG, int valB, bool rev);
+    Ghost(int valX, int valY, Color valColor, bool rev);
+    Ghost(Point valPosition, int valR, int valG, int valB, bool rev);
+    Ghost(Point valPosition, Color valColor, bool rev);
+
     void draw();
 };
 

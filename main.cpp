@@ -19,8 +19,10 @@ double rx = 0, ry = 0, rz = 0;
 Pos pontoTeste = {350, 285};
 
 Maze *Labyrinth;
+
 Pellet *NormalPellet;
 Pellet *PowerPellet;
+
 Ghost *GhoBlinky;
 Ghost *GhoClyde;
 Ghost *GhoInky;
@@ -28,18 +30,22 @@ Ghost *GhoPinky;
 
 void initPacman(){
     char arq[] = "Matrix.txt";
-    Pos posBlinky = {225, 285};
-    Pos posClyde = {285, 335};
-    Pos posInky = {285, 285};
-    Pos posPinky = {285, 235};
+
+    Point posBlinky = Point(25, 285);
+    Point posClyde = Point(285, 335);
+    Point posInky = Point(285, 285);
+    Point posPinky = Point(285, 235);
+
     NormalPellet = new Pellet(3.0);
     PowerPellet = new Pellet(7.0);
+
     Labyrinth = new Maze(arq);
     Labyrinth->setPellets(NormalPellet, PowerPellet);
-    GhoClyde = new Ghost(posClyde.x, posClyde.y, 255, 165, 0, false); //clyde
-    GhoPinky = new Ghost(posPinky.x, posPinky.y, 255, 105, 180, false); //pinky
-    GhoInky = new Ghost(posInky.x, posInky.y, 0, 255, 255, false); //inky
-    GhoBlinky = new Ghost(posBlinky.x, posBlinky.y, 255, 0, 0, false); //blinky*/
+
+    GhoClyde = new Ghost(posClyde, Color(LIGHT_PINK), false); //clyde
+    GhoPinky = new Ghost(posPinky, Color(ORANGE), false); //pinky
+    GhoInky = new Ghost(posInky, Color(CYAN), false); //inky
+    GhoBlinky = new Ghost(posBlinky, Color(RED), false); //blinky*/
 }
 
 void init(){
@@ -161,16 +167,19 @@ void specialInt(int key, int x, int y){
 
 void displayFunc() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //limpa o buffer
-    glColor3ub(0,0,255);
+
+    glColor(BLUE);
     glPopMatrix();
     glPushMatrix();
     glRotatef(rx, 1, 0, 0);
     glRotatef(ry, 0, 1, 0);
     glRotatef(rz, 0, 0, 1);
     glTranslated(-240, -240, 0);
+
     Labyrinth->colisaoPellet(pontoTeste.x, pontoTeste.y, 3);
     PowerPellet->setPoint(pontoTeste.x, pontoTeste.y);
-    glColor3ub(255,0,0);
+
+    glColor(RED);
     PowerPellet->draw();
 
     Labyrinth->draw();
