@@ -5,10 +5,13 @@
 
 class Pacman : public Point {
     private:
+        float radius;
         GLUquadricObj *object;
     public:
-        Pacman(float valX, float valY);
+        Pacman(float valX, float valY, float valRadius);
         void draw();
+        void setRadius(float radius);
+        float getRadius();
 };
 
 #endif

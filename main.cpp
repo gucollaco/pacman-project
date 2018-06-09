@@ -31,7 +31,7 @@ void initPacman(){
     GhoPinky = new Ghost(285, 335, 255, 105, 180, false); //pinky
     GhoInky = new Ghost(285, 285, 0, 255, 255, false); //inky
     GhoBlinky = new Ghost(285, 235, 255, 0, 0, false); //blinky
-    Pac = new Pacman(350, 170);
+    Pac = new Pacman(25, 25, 8);
 }
 
 void init() {
@@ -47,16 +47,20 @@ void init() {
 void keyboardInt(unsigned char key, int x, int y){
     switch(key){
         case 'd':
-            /*if(canIncrease(Mat, posPac.x, posPac.y, RIGHT))*/ Pac->setX(Pac->getX()+2.5);
+            if(Labyrinth->canIncrease(Pac, MAZE_RIGHT)) 
+                Pac->setX(Pac->getX()+12.5);
             break;
         case 'a':
-            /*if(canIncrease(Mat, posPac.x, posPac.y, LEFT))*/ Pac->setX(Pac->getX()-2.5);
+            if(Labyrinth->canIncrease(Pac, MAZE_LEFT)) 
+                Pac->setX(Pac->getX()-12.5);
             break;
         case 'w':
-            /*if(canIncrease(Mat, posPac.x, posPac.y, UP))*/ Pac->setY(Pac->getY()+2.5);
+            if(Labyrinth->canIncrease(Pac, MAZE_UP))
+                Pac->setY(Pac->getY()+12.5);
             break;
         case 's':
-            /*if(canIncrease(Mat, posPac.x, posPac.y, DOWN))*/ Pac->setY(Pac->getY()-2.5);
+            if(Labyrinth->canIncrease(Pac, MAZE_DOWN)) 
+                Pac->setY(Pac->getY()-12.5);
             break;
     }
     printf("%lf %lf\n", Pac->getX(), Pac->getY());
@@ -90,7 +94,7 @@ void displayFunc() {
     glRotatef(ry, 0, 1, 0);
     glRotatef(rz, 0, 0, 1);
     glTranslated(-240, -240, 0);
-    Labyrinth->colisaoPellet(Pac->getX(), Pac->getY(), 8);
+    Labyrinth->pelletCollision(Pac);
     Pac->draw();
 
     Labyrinth->draw();

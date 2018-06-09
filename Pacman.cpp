@@ -5,10 +5,17 @@
 
 #include "Pacman.h"
 
-Pacman::Pacman(float valX, float valY) : Point(valX, valY) {
-    this->setX(valX);
-    this->setY(valY);
+Pacman::Pacman(float valX, float valY, float valRadius) : Point(valX, valY) {
+    this->setRadius(radius);
     object = gluNewQuadric();
+}
+
+void Pacman::setRadius(float radius){
+    this->radius = radius;
+}
+
+float Pacman::getRadius(){
+    return this->radius;
 }
 
 void Pacman::draw(){

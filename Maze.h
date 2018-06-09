@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <malloc.h>
 #include "Pellet.h"
+#include "Pacman.h"
 #define MAZE_UP 1
 #define MAZE_DOWN 2
 #define MAZE_LEFT 3
@@ -25,10 +26,10 @@ public:
     void setValue(int line, int column, int value);
     int getValue(int line, int column);
     void setPellets(Pellet *normal, Pellet *power);
-    void colisaoPellet(float x, float y, float r);
+    void pelletCollision(Pacman *Pac);
+    bool canIncrease(Pacman *Pac, int direcao);
     void show();
     void draw();
-    bool canIncrease(Maze *maze, float x, float y, int direcao);
 };
 
 
