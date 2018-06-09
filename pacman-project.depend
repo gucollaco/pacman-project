@@ -1,10 +1,11 @@
 # depslib dependency file v1.0
-1528399553 source:d:\gustavo\desktop\software development\pacman-project\main.cpp
+1528507191 source:d:\gustavo\desktop\software development\pacman-project\main.cpp
 	<stdio.h>
 	<math.h>
 	<GL/glut.h>
 	"Maze.cpp"
 	"Ghost.cpp"
+	"Pacman.cpp"
 
 1341006776 d:\program files\codeblocks\mingw\include\stdio.h
 	<_mingw.h>
@@ -243,17 +244,21 @@
 	<stddef.h>
 	<GL/gl.h>
 
-1528396760 d:\gustavo\desktop\software development\pacman-project\pellet.cpp
+1528475094 d:\gustavo\desktop\software development\pacman-project\pellet.cpp
 	<GL/glut.h>
+	"Point.cpp"
 
-1528399587 d:\gustavo\desktop\software development\pacman-project\maze.cpp
+1528507613 d:\gustavo\desktop\software development\pacman-project\maze.cpp
 	<stdio.h>
 	<GL/glut.h>
 	"Pellet.cpp"
 
-1528398876 d:\gustavo\desktop\software development\pacman-project\ghost.cpp
+1528502350 d:\gustavo\desktop\software development\pacman-project\ghost.cpp
+	<GL/glut.h>
+	"Point.cpp"
 
-1528396120 d:\gustavo\desktop\software development\pacman-project\pacman.cpp
+1528507031 d:\gustavo\desktop\software development\pacman-project\pacman.cpp
+	<GL/glut.h>
 
 1528475092 source:d:\gustavo\downloads\pacman-project\main.cpp
 	<stdio.h>
@@ -280,4 +285,6 @@
 
 1528475092 d:\gustavo\downloads\pacman-project\pacman.cpp
 	<GL/glut.h>
+
+1528502503 d:\gustavo\desktop\software development\pacman-project\point.cpp
 

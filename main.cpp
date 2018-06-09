@@ -21,6 +21,7 @@ Ghost *GhoBlinky;
 Ghost *GhoClyde;
 Ghost *GhoInky;
 Ghost *GhoPinky;
+Pacman *Pac;
 
 void initPacman(){
     char arq[] = "Matrix.txt";
@@ -36,6 +37,7 @@ void initPacman(){
     GhoPinky = new Ghost(posPinky.x, posPinky.y, 255, 105, 180, false); //pinky
     GhoInky = new Ghost(posInky.x, posInky.y, 0, 255, 255, false); //inky
     GhoBlinky = new Ghost(posBlinky.x, posBlinky.y, 255, 0, 0, false); //blinky*/
+    Pac = new Pacman(350, 170);
 }
 
 void init(){
@@ -164,10 +166,9 @@ void displayFunc() {
     glRotatef(ry, 0, 1, 0);
     glRotatef(rz, 0, 0, 1);
     glTranslated(-240, -240, 0);
-    Labyrinth->colisaoPellet(pontoTeste.x, pontoTeste.y, 3);
-    PowerPellet->setPoint(pontoTeste.x, pontoTeste.y);
-    glColor3ub(255,0,0);
-    PowerPellet->draw();
+    Labyrinth->colisaoPellet(pontoTeste.x, pontoTeste.y, 8);
+    Pac->setPoint(pontoTeste.x, pontoTeste.y);
+    Pac->draw();
 
     Labyrinth->draw();
     GhoClyde->draw();

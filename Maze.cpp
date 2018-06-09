@@ -47,7 +47,11 @@ void Maze::colisaoPellet(float x, float y, float r){
     float y1 = 25*c;
     float dx = x - x1;
     float dy = y - y1;
-    if (dx*dx + dy*dy <= r*r) this->setValue(l, c, 9);
+    if (dx*dx + dy*dy <= r*r){
+        if(this->getValue(l, c) == 0 || this->getValue(l, c) == 2 ){
+            this->setValue(l, c, 9);
+        }
+    }
 }
 
 /*------------------------------
