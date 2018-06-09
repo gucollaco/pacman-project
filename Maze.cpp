@@ -139,12 +139,9 @@ void Maze::setPellets(Pellet *normal, Pellet *power){
     this->power = power;
 }
 
-bool Maze::canIncrease(Pacman *Pac, int direcao){
-    float x = Pac->getX();
-    float y = Pac->getY();
+bool Maze::canIncrease(float x, float y, int direcao){
     int l = inside(x);
     int c = inside(y);
-    printf("%d %d\n", l, c);
     int v;
     switch(direcao){
         case MAZE_UP:

@@ -47,20 +47,20 @@ void init() {
 void keyboardInt(unsigned char key, int x, int y){
     switch(key){
         case 'd':
-            if(Labyrinth->canIncrease(Pac, MAZE_RIGHT)) 
-                Pac->setX(Pac->getX()+12.5);
+            if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_RIGHT)) 
+                Pac->increaseX(12.5);
             break;
         case 'a':
-            if(Labyrinth->canIncrease(Pac, MAZE_LEFT)) 
-                Pac->setX(Pac->getX()-12.5);
+            if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_LEFT)) 
+                Pac->increaseX(-12.5);
             break;
         case 'w':
-            if(Labyrinth->canIncrease(Pac, MAZE_UP))
-                Pac->setY(Pac->getY()+12.5);
+            if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_UP))
+                Pac->increaseY(12.5);
             break;
         case 's':
-            if(Labyrinth->canIncrease(Pac, MAZE_DOWN)) 
-                Pac->setY(Pac->getY()-12.5);
+            if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_DOWN)) 
+                Pac->increaseY(-12.5);
             break;
     }
     printf("%lf %lf\n", Pac->getX(), Pac->getY());

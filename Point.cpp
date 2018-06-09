@@ -20,3 +20,9 @@ float Point::getX(){
 float Point::getY(){
     return this->y;
 }
+void Point::increaseX(float x){
+    this->x += x;
+}
+void Point::increaseY(float y){
+    this->y += y;
+}
