@@ -26,27 +26,19 @@ Pacman *Pac;
 void initPacman(){
     char arq[] = "Matrix.txt";
 
-    Point posBlinky = Point(25, 285);
-    Point posClyde = Point(285, 335);
-    Point posInky = Point(285, 285);
-    Point posPinky = Point(285, 235);
-
     NormalPellet = new Pellet(3.0);
     PowerPellet = new Pellet(7.0);
 
     Labyrinth = new Maze(arq);
     Labyrinth->setPellets(NormalPellet, PowerPellet);
 
-    GhoClyde = new Ghost(posClyde, Color(LIGHT_PINK), false); //clyde
-    GhoPinky = new Ghost(posPinky, Color(ORANGE), false); //pinky
-    GhoInky = new Ghost(posInky, Color(CYAN), false); //inky
-    GhoBlinky = new Ghost(posBlinky, Color(RED), false); //blinky*/
-=======
-    GhoClyde = new Ghost(225, 285, 255, 165, 0, false); //clyde
-    GhoPinky = new Ghost(285, 335, 255, 105, 180, false); //pinky
-    GhoInky = new Ghost(285, 285, 0, 255, 255, false); //inky
-    GhoBlinky = new Ghost(285, 235, 255, 0, 0, false); //blinky
+    GhoClyde = new Ghost(225, 285, Color(LIGHT_PINK), false); //clyde
+    GhoPinky = new Ghost(285, 335, Color(ORANGE), false); //pinky
+    GhoInky = new Ghost(285, 285, Color(CYAN), false); //inky
+    GhoBlinky = new Ghost(285, 235, Color(RED), false); //blinky
+            
     Pac = new Pacman(350, 170);
+
 }
 
 void init() {
@@ -107,12 +99,10 @@ void displayFunc() {
     glRotatef(rz, 0, 0, 1);
     glTranslated(-240, -240, 0);
 
-    Labyrinth->colisaoPellet(pontoTeste.x, pontoTeste.y, 3);
-    PowerPellet->setPoint(pontoTeste.x, pontoTeste.y);
-
     glColor(RED);
     PowerPellet->draw();
     Labyrinth->colisaoPellet(Pac->getX(), Pac->getY(), 8);
+
     Pac->draw();
 
     Labyrinth->draw();
