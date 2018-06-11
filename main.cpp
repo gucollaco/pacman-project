@@ -5,10 +5,6 @@
 #include "Ghost.h"
 #include "Pacman.h"
 
-int inside2(float value){
-    return static_cast<int>((value + 12.5) / 25);
-}
-
 double rx = 0, ry = 0, rz = 0;
 
 Maze *Labyrinth;
