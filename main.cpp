@@ -4,6 +4,11 @@
 #include "Maze.h"
 #include "Ghost.h"
 #include "Pacman.h"
+#include "Maze.cpp"
+#include "Ghost.cpp"
+#include "Point.cpp"
+#include "Pacman.cpp"
+#include "Pellet.cpp"
 
 double rx = 0, ry = 0, rz = 0;
 
