@@ -36,7 +36,7 @@ void initPacman(){
     GhoPinky = new Ghost(285, 335, Color(ORANGE), false); //pinky
     GhoInky = new Ghost(285, 285, Color(CYAN), false); //inky
     GhoBlinky = new Ghost(285, 235, Color(RED), false); //blinky
-            
+
     Pac = new Pacman(350, 170);
 
 }
@@ -99,8 +99,6 @@ void displayFunc() {
     glRotatef(rz, 0, 0, 1);
     glTranslated(-240, -240, 0);
 
-    glColor(RED);
-    PowerPellet->draw();
     Labyrinth->colisaoPellet(Pac->getX(), Pac->getY(), 8);
 
     Pac->draw();
