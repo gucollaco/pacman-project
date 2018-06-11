@@ -8,7 +8,10 @@
 #include <stdio.h>
 #include <malloc.h>
 #include "Pellet.h"
-
+#define MAZE_UP 1
+#define MAZE_DOWN 2
+#define MAZE_LEFT 3
+#define MAZE_RIGHT 4
 
 class Maze{
 private:
@@ -25,6 +28,8 @@ public:
     void colisaoPellet(float x, float y, float r);
     void show();
     void draw();
+    bool canIncrease(Maze *maze, float x, float y, int direcao);
 };
+
 
 #endif

@@ -1,0 +1,10 @@
+{
+    "python.pythonPath": "C:\\Python27\\python2.exe",
+    "files.associations": {
+        "matriz.cpp": "c",
+        "istream": "cpp",
+        "ostream": "cpp",
+        "system_error": "cpp",
+        "type_traits": "cpp"
+    }
+}
