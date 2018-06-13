@@ -1,6 +1,7 @@
 #ifndef _PACMAN_H_
 #define _PACMAN_H_
 
+#include <GL/glut.h>
 #include "Point.h"
 
 class Pacman : public Point {

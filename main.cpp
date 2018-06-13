@@ -63,7 +63,7 @@ void keyboardInt(unsigned char key, int x, int y){
                 Pac->increaseY(-12.5);
             break;
     }
-    printf("%lf %lf\n", Pac->getX(), Pac->getY());
+    printf("%f %f\n", Pac->getX(), Pac->getY());
     glutPostRedisplay();
 }
 

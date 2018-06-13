@@ -1,4 +1,3 @@
-
 #include <iosfwd>
 #include <sstream>
 #include "Maze.h"
@@ -43,7 +42,7 @@ void Maze::pelletCollision(Pacman *Pac){
 Maze::Maze(char *path_char){
     int i, j;
     std::string path(path_char);
-
+    
     FILE *temp = fopen(path.c_str(), "r");
     while(temp == NULL){
         printf("Coundn't find maze file, trying again...\n");
@@ -51,7 +50,7 @@ Maze::Maze(char *path_char){
         std::stringstream ss;
         ss << "../" << path;
         path = ss.str();
-        printf("Trying at <%s>", path);
+        printf("Trying at <%s>\n", path);
 
         temp = fopen(path.c_str(), "r");
     }

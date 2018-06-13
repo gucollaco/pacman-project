@@ -1,8 +1,3 @@
-
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
-
 #include "Pacman.h"
 
 Pacman::Pacman(float valX, float valY, float valRadius) : Point(valX, valY) {

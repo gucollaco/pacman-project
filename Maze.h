@@ -1,12 +1,6 @@
 #ifndef _MAZE_H_
 #define _MAZE_H_
 
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
-
-#include <stdio.h>
-#include <malloc.h>
 #include "Pellet.h"
 #include "Pacman.h"
 #define MAZE_UP 1
@@ -31,6 +25,5 @@ public:
     void show();
     void draw();
 };
-
 
 #endif

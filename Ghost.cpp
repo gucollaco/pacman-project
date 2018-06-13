@@ -1,4 +1,3 @@
-
 #include "Ghost.h"
 
 Ghost::Ghost(int valX, int valY, int valR, int valG, int valB, bool rev) : Point(valX, valY) {
