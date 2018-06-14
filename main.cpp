@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include <ctime>
 
 #include "Maze.h"
 #include "Ghost.h"
@@ -11,7 +12,8 @@
 #include "Pellet.cpp"
 
 double rx = 0, ry = 0, rz = 0;
-float zoom = 100;
+float zoom = 600;
+time_t tempo = 0;
 
 Maze *Labyrinth;
 Pellet *NormalPellet;
@@ -30,7 +32,7 @@ const GLfloat light_position[] = { 3.0f, 7.0f, 7.0f, 0.0f };
 void initPacman(){
     char arq[] = "Matrix.txt";
     NormalPellet = new Pellet(3.0);
-    PowerPellet = new Pellet(7.0);
+    PowerPellet = new Pellet(6.0);
     Labyrinth = new Maze(arq);
     Labyrinth->show();
     Labyrinth->setPellets(NormalPellet, PowerPellet);
@@ -42,7 +44,7 @@ void initPacman(){
 }
 
 void init() {
-    glClearColor(0.5f, 0.5f, 0.5f, 1.0f); //define a cor de fundo
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); //define a cor de fundo
     glEnable(GL_DEPTH_TEST); //habilita o teste de profundidade
 
     glMatrixMode(GL_MODELVIEW); //define que a matrix � a de proje��o
@@ -129,6 +131,7 @@ void timerFunc(int value){
 }
 
 void displayFunc() {
+    int test;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //limpa o buffer
     glColor3ub(0,0,255);
     glPopMatrix();
@@ -138,11 +141,29 @@ void displayFunc() {
     glRotatef(rz, 0, 0, 1);
     //glTranslated(-240, -240, 0);
     glTranslated(-Pac->getX(), -Pac->getY(), 0);
-    Labyrinth->pelletCollision(Pac);
-    GhoBlinky->collision(Pac->getX(), Pac->getY(), 16);
-    GhoClyde->collision(Pac->getX(), Pac->getY(), 16);
-    GhoInky->collision(Pac->getX(), Pac->getY(), 16);
-    GhoPinky->collision(Pac->getX(), Pac->getY(), 16);
+    if( POWER_PELLET == Labyrinth->pelletCollision(Pac)){
+        GhoBlinky->setReversed(true);
+        GhoClyde->setReversed(true);
+        GhoInky->setReversed(true);
+        GhoPinky->setReversed(true);
+        tempo = time(NULL) + 5;
+    }
+    if(tempo != 0 && tempo < time(NULL)){
+        GhoBlinky->setReversed(false);
+        GhoClyde->setReversed(false);
+        GhoInky->setReversed(false);
+        GhoPinky->setReversed(false);
+        tempo = 0;
+    }
+    test = GhoBlinky->collision(Pac->getX(), Pac->getY(), 16);
+    if(test == 2) Pac->reset();
+    test = GhoClyde->collision(Pac->getX(), Pac->getY(), 16);
+    if(test == 2) Pac->reset();
+    test = GhoInky->collision(Pac->getX(), Pac->getY(), 16);
+    if(test == 2) Pac->reset();
+    test = GhoPinky->collision(Pac->getX(), Pac->getY(), 16);
+    if(test == 2) Pac->reset();
+    
     Pac->draw();
 
     Labyrinth->draw();

@@ -20,7 +20,7 @@ public:
     void setValue(int line, int column, int value);
     int getValue(int line, int column);
     void setPellets(Pellet *normal, Pellet *power);
-    void pelletCollision(Pacman *Pac);
+    int pelletCollision(Pacman *Pac);
     bool canIncrease(float x, float y, int direcao);
     void show();
     void draw();

@@ -12,7 +12,7 @@ int inside(float value){
     return static_cast<int>((value + 12.5) / 25);
 }
 
-void Maze::pelletCollision(Pacman *Pac){
+int Maze::pelletCollision(Pacman *Pac){
     float x = Pac->getX();
     float y = Pac->getY();
     float r = Pac->getRadius();
@@ -23,8 +23,15 @@ void Maze::pelletCollision(Pacman *Pac){
     float dx = x - x1;
     float dy = y - y1;
     if (dx*dx + dy*dy <= r*r){
-        if(this->getValue(l, c) == '0' || this->getValue(l, c) == '2' ){
-            this->setValue(l, c, '9');
+        switch(this->getValue(l, c)){
+            case '0':
+                this->setValue(l, c, '9');
+                return NORMAL_PELLET;
+            case '2':
+                this->setValue(l, c, '9');
+                return POWER_PELLET;
+            default:
+                return NOT_A_PELLET;
         }
     }
 }
@@ -216,7 +223,13 @@ void Maze::draw(){
             
         }
     }
-    glColor3ub(0, 0, 255);
+    glColor3ub(0, 0, 0);
+    glBegin(GL_POLYGON);
+        glVertex3f(0, 0, -6.25);
+        glVertex3f(0, this->col*25, -6.5);
+        glVertex3f(this->lin*25, this->col*25, -6.5);
+        glVertex3f(this->lin*25, 0, -6.5);
+    glEnd();
 }
 
 void Maze::setValue(int line, int column, int value){

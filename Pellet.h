@@ -3,6 +3,9 @@
 
 #include <GL/glut.h>
 #include "Point.h"
+#define NOT_A_PELLET 0
+#define POWER_PELLET 1
+#define NORMAL_PELLET 2
 
 class Pellet : public Point{
 private:

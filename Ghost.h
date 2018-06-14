@@ -23,6 +23,8 @@ public:
     void draw();
     bool walk(int canWalk);
     int getDirection();
+    bool getReversed();
+    void setReversed(bool reversed);
     void setDirection(int direction);
     int collision(float x, float y, float r);
 };

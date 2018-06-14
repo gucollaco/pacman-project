@@ -48,6 +48,7 @@ float Pacman::getRadius(){
 void Pacman::draw(){
     glPushMatrix();
         glTranslatef(this->getX(), this->getY(), 0);
+        glTranslatef(0, 0, 16-6.25);
         glRotatef(90.0, 1.0, 0.0, 0.0);
         glRotatef(90.0*direction, 0.0, 1.0, 0.0);
         glRotatef(10, 0, 0, 1);

@@ -41,6 +41,14 @@ int Ghost::getDirection(){
     return this->direction;
 }
 
+void Ghost::setReversed(bool reversed){
+    this->isReversed = reversed;
+}
+
+bool Ghost::getReversed(){
+    return this->isReversed;
+}
+
 int inside2(float value){
     return static_cast<int>((value + 12.5) / 25);
 }
@@ -55,9 +63,12 @@ int Ghost::collision(float x, float y, float r){
     float dx = x - x1;
     float dy = y - y1;
     if (dx*dx + dy*dy <= r*r){
-        this->isReversed = true;
-        printf("ghost collision\n");
-        return 1;
+        //this->isReversed = true;
+        if(this->isReversed){
+            this->reset();
+            return 1;
+        }
+        return 2;
     }
     return 0;
 }
@@ -65,6 +76,7 @@ int Ghost::collision(float x, float y, float r){
 void Ghost::draw() {
     glPushMatrix();
         glTranslatef(this->getX(), this->getY(), 0);
+        glTranslatef(0 , 0, 16-6.25);
         glRotatef(90.0, 1.0, 0.0, 0.0);
         glRotatef(90.0*direction, 0.0, 1.0, 0.0);
 //                if(angY == 0 || angY == 180) {
@@ -122,7 +134,10 @@ void Ghost::draw() {
             }
 
             //ghost leg - central leg
-            glColor3ub(this->r, this->g, this->b);
+            if(this->isReversed)
+                glColor3ub(10, 10, 255);
+            else
+                glColor3ub(this->r, this->g, this->b);
             glPushMatrix();
                 glTranslatef(0.0, -12.0, 0.0);
                 glPushMatrix();
@@ -136,7 +151,10 @@ void Ghost::draw() {
             glPopMatrix();
 
             //ghost leg - other legs
-            glColor3ub(this->r, this->g, this->b);
+            if(this->isReversed)
+                glColor3ub(10, 10, 255);
+            else
+                glColor3ub(this->r, this->g, this->b);
             glPushMatrix();
 //                        aniRate = !(ghost.isReversed) ? 1.5 : 3.0;
 //                        glRotatef(animation, 0, 1, 0);
