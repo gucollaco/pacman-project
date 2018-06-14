@@ -1,8 +1,6 @@
 #include "Ghost.h"
 
 Ghost::Ghost(int valX, int valY, int valR, int valG, int valB, bool rev) : Point(valX, valY) {
-    mt = std::mt19937(time(NULL));
-    dist = std::uniform_int_distribution<int>(1, 4);
     this->r = valR;
     this->g = valG;
     this->b = valB;
@@ -29,8 +27,7 @@ bool Ghost::walk(int canWalk){
         return true;
     }
     else{
-        int d = dist(mt);
-        printf("%f %f direcao %d\n", getX(), getY(), d);
+        int d = this->dist(this->mt);
         this->setDirection(d);
     }
     return false;

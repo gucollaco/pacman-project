@@ -25,6 +25,15 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "string_view": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "unordered_map": "cpp",
+        "array": "cpp",
+        "ctime": "cpp",
+        "vector": "cpp",
+        "fstream": "cpp",
+        "numeric": "cpp",
+        "optional": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp"
     }
 }

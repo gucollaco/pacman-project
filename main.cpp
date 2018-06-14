@@ -26,11 +26,12 @@ void initPacman(){
     NormalPellet = new Pellet(3.0);
     PowerPellet = new Pellet(7.0);
     Labyrinth = new Maze(arq);
+    Labyrinth->show();
     Labyrinth->setPellets(NormalPellet, PowerPellet);
-    GhoClyde = new Ghost(9*25, 11*25, 255, 165, 0, false); //clyde
-    GhoPinky = new Ghost(11*25, 13.5*25, 255, 105, 180, false); //pinky
-    GhoInky = new Ghost(11*25, 11.5*25, 0, 255, 255, false); //inky
-    GhoBlinky = new Ghost(11*25, 9.5*25, 255, 0, 0, false); //blinky
+    GhoClyde = new Ghost(25, 25, 255, 165, 0, false); //clyde
+    GhoPinky = new Ghost(11*25, 13*25, 255, 105, 180, false); //pinky
+    GhoInky = new Ghost(11*25, 11*25, 0, 255, 255, false); //inky
+    GhoBlinky = new Ghost(11*25, 9*25, 255, 0, 0, false); //blinky
     Pac = new Pacman(25, 25, 8);
 }
 
@@ -92,13 +93,21 @@ void specialInt(int key, int x, int y){
     glutPostRedisplay();
 }
 
+void GhostWalk(Ghost *ghost){
+    bool canWalk;
+    canWalk = Labyrinth->canIncrease(ghost->getX(), ghost->getY(), ghost->getDirection());
+    while(!ghost->walk(canWalk)){
+        canWalk = Labyrinth->canIncrease(ghost->getX(), ghost->getY(), ghost->getDirection());
+    }
+}
+
 void timerFunc(int value){
     bool canWalk = Labyrinth->canIncrease(Pac->getX(), Pac->getY(), Pac->getDirection());
     Pac->walk(canWalk);
-    canWalk = Labyrinth->canIncrease(GhoClyde->getX(), GhoClyde->getY(), GhoClyde->getDirection());
-    while(!GhoClyde->walk(canWalk)){
-        canWalk = Labyrinth->canIncrease(GhoClyde->getX(), GhoClyde->getY(), GhoClyde->getDirection());
-    }
+    GhostWalk(GhoBlinky);
+    GhostWalk(GhoClyde);
+    GhostWalk(GhoPinky);
+    GhostWalk(GhoInky);
     glutPostRedisplay();
     glutTimerFunc(200, timerFunc, value);
 }
