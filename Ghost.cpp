@@ -1,11 +1,47 @@
 #include "Ghost.h"
 
 Ghost::Ghost(int valX, int valY, int valR, int valG, int valB, bool rev) : Point(valX, valY) {
+    mt = std::mt19937(time(NULL));
+    dist = std::uniform_int_distribution<int>(1, 4);
     this->r = valR;
     this->g = valG;
     this->b = valB;
     this->isReversed = rev;
     this->object = gluNewQuadric();
+}
+
+bool Ghost::walk(int canWalk){
+    if(canWalk){
+        switch(this->direction){
+        case GHOST_UP:
+            this->increaseY(12.5);
+            break;
+        case GHOST_DOWN:
+            this->increaseY(-12.5);
+            break;
+        case GHOST_LEFT:
+            this->increaseX(-12.5);
+            break;
+        case GHOST_RIGHT:
+            this->increaseX(12.5);
+            break;
+        }
+        return true;
+    }
+    else{
+        int d = dist(mt);
+        printf("%f %f direcao %d\n", getX(), getY(), d);
+        this->setDirection(d);
+    }
+    return false;
+}
+
+void Ghost::setDirection(int direction){
+    this->direction = direction;
+}
+
+int Ghost::getDirection(){
+    return this->direction;
 }
 
 void Ghost::draw() {

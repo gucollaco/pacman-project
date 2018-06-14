@@ -27,10 +27,10 @@ void initPacman(){
     PowerPellet = new Pellet(7.0);
     Labyrinth = new Maze(arq);
     Labyrinth->setPellets(NormalPellet, PowerPellet);
-    GhoClyde = new Ghost(225, 285, 255, 165, 0, false); //clyde
-    GhoPinky = new Ghost(285, 335, 255, 105, 180, false); //pinky
-    GhoInky = new Ghost(285, 285, 0, 255, 255, false); //inky
-    GhoBlinky = new Ghost(285, 235, 255, 0, 0, false); //blinky
+    GhoClyde = new Ghost(9*25, 11*25, 255, 165, 0, false); //clyde
+    GhoPinky = new Ghost(11*25, 13.5*25, 255, 105, 180, false); //pinky
+    GhoInky = new Ghost(11*25, 11.5*25, 0, 255, 255, false); //inky
+    GhoBlinky = new Ghost(11*25, 9.5*25, 255, 0, 0, false); //blinky
     Pac = new Pacman(25, 25, 8);
 }
 
@@ -47,23 +47,30 @@ void init() {
 void keyboardInt(unsigned char key, int x, int y){
     switch(key){
         case 'd':
-            if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_RIGHT)) 
-                Pac->increaseX(12.5);
+            if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_RIGHT)){
+                    Pac->setDirection(MAZE_RIGHT);
+                //Pac->walk();
+            } 
             break;
         case 'a':
-            if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_LEFT)) 
-                Pac->increaseX(-12.5);
+            if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_LEFT)){
+                    Pac->setDirection(MAZE_LEFT);
+                //Pac->walk();
+            } 
             break;
         case 'w':
-            if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_UP))
-                Pac->increaseY(12.5);
+            if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_UP)){
+                    Pac->setDirection(MAZE_UP);
+                //Pac->walk();
+            }
             break;
         case 's':
-            if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_DOWN)) 
-                Pac->increaseY(-12.5);
+            if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_DOWN)){
+                    Pac->setDirection(MAZE_DOWN);
+                //Pac->walk();
+            } 
             break;
     }
-    printf("%f %f\n", Pac->getX(), Pac->getY());
     glutPostRedisplay();
 }
 
@@ -83,6 +90,17 @@ void specialInt(int key, int x, int y){
             break;
     }
     glutPostRedisplay();
+}
+
+void timerFunc(int value){
+    bool canWalk = Labyrinth->canIncrease(Pac->getX(), Pac->getY(), Pac->getDirection());
+    Pac->walk(canWalk);
+    canWalk = Labyrinth->canIncrease(GhoClyde->getX(), GhoClyde->getY(), GhoClyde->getDirection());
+    while(!GhoClyde->walk(canWalk)){
+        canWalk = Labyrinth->canIncrease(GhoClyde->getX(), GhoClyde->getY(), GhoClyde->getDirection());
+    }
+    glutPostRedisplay();
+    glutTimerFunc(200, timerFunc, value);
 }
 
 void displayFunc() {
@@ -117,6 +135,7 @@ int main(int argc, char *argv[]){
     glutDisplayFunc(displayFunc);
     glutSpecialFunc(specialInt);
     glutKeyboardFunc(keyboardInt);
+    glutTimerFunc(200, timerFunc, 0);
 	init();
 	glutMainLoop();
 	return 0;

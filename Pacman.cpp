@@ -5,6 +5,33 @@ Pacman::Pacman(float valX, float valY, float valRadius) : Point(valX, valY) {
     object = gluNewQuadric();
 }
 
+void Pacman::walk(int canWalk){
+    if(canWalk){
+        switch(this->direction){
+        case PAC_UP:
+            this->increaseY(12.5);
+            break;
+        case PAC_DOWN:
+            this->increaseY(-12.5);
+            break;
+        case PAC_LEFT:
+            this->increaseX(-12.5);
+            break;
+        case PAC_RIGHT:
+            this->increaseX(12.5);
+            break;
+        }
+    }
+}
+
+void Pacman::setDirection(int direction){
+    this->direction = direction;
+}
+
+int Pacman::getDirection(){
+    return this->direction;
+}
+
 void Pacman::setRadius(float radius){
     this->radius = radius;
 }

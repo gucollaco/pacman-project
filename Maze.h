@@ -3,10 +3,10 @@
 
 #include "Pellet.h"
 #include "Pacman.h"
-#define MAZE_UP 1
-#define MAZE_DOWN 2
-#define MAZE_LEFT 3
-#define MAZE_RIGHT 4
+#define MAZE_UP PAC_UP
+#define MAZE_DOWN PAC_DOWN
+#define MAZE_LEFT PAC_LEFT
+#define MAZE_RIGHT PAC_RIGHT
 
 class Maze{
 private:
