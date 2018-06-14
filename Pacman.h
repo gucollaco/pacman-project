@@ -4,14 +4,16 @@
 #include <GL/glut.h>
 #include "Point.h"
 #define PAC_UP 1
-#define PAC_DOWN 2
-#define PAC_LEFT 3
+#define PAC_LEFT 2
+#define PAC_DOWN 3
 #define PAC_RIGHT 4
 
 class Pacman : public Point {
     private:
         float radius;
         int direction;
+        float animation;
+        float inc;
         GLUquadricObj *object;
     public:
         Pacman(float valX, float valY, float valRadius);

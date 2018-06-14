@@ -3,6 +3,8 @@
 Pacman::Pacman(float valX, float valY, float valRadius) : Point(valX, valY) {
     this->setRadius(radius);
     object = gluNewQuadric();
+    inc = 7.5;
+    animation = 60;
 }
 
 void Pacman::walk(int canWalk){
@@ -21,6 +23,9 @@ void Pacman::walk(int canWalk){
             this->increaseX(12.5);
             break;
         }
+        if(animation >= 90 || animation <= 45)
+            inc = -inc;
+        animation += inc;
     }
 }
 
@@ -44,25 +49,26 @@ void Pacman::draw(){
     glPushMatrix();
         glTranslatef(this->getX(), this->getY(), 0);
         glRotatef(90.0, 1.0, 0.0, 0.0);
-
+        glRotatef(90.0*direction, 0.0, 1.0, 0.0);
+        glRotatef(10, 0, 0, 1);
         glPushMatrix();
             glColor3ub(255, 255, 0);
             double clip[2][4] = {{ 5.0, 0.0, 0.0, 1.0 }, { -5.0, 0.0, 0.0, 1.0 }};
             glEnable(GL_CLIP_PLANE0);
                 glPushMatrix();
-                    glRotatef(25, 0, 0, 1);
-                    glRotatef(-45, 0.0, 0.0, 1.0);
+                    glRotatef(-10, 0, 0, 1);
+                    glRotatef(animation, 0.0, 0.0, 1.0);
                     glClipPlane(GL_CLIP_PLANE0, clip[1]);
                     glPushMatrix();
-                        gluSphere(object, 8, 50, 10);
+                        gluSphere(object, 16, 50, 10);
                     glPopMatrix();
                 glPopMatrix();
                 glPushMatrix();
-                    glRotatef(25, 0, 0, 1);
-                    glRotatef(45, 0.0, 0.0, 1.0);
+                    glRotatef(-10, 0, 0, 1);
+                    glRotatef(-animation, 0.0, 0.0, 1.0);
                     glClipPlane(GL_CLIP_PLANE0, clip[1]);
                     glPushMatrix();
-                        gluSphere(object, 8, 50, 10);
+                        gluSphere(object, 16, 50, 10);
                     glPopMatrix();
                 glPopMatrix();
         glPopMatrix();
@@ -73,17 +79,17 @@ void Pacman::draw(){
             glPushMatrix();
                 glRotatef(20, 0.0, 0.0, 1.0);
                 glRotatef(20, 0.0, 1.0, 0.0);
-                glTranslatef(4.6, 4.6, 4.6);
-                gluSphere(object, 2, 50, 10);
+                glTranslatef(9, 9, 9);
+                gluSphere(object, 4, 50, 10);
             glPopMatrix();
             glPushMatrix();
                 glRotatef(20, 0.0, 0.0, 1.0);
                 glRotatef(70, 0.0, 1.0, 0.0);
-                glTranslatef(4.6, 4.6, 4.6);
-                gluSphere(object, 2, 50, 10);
+                glTranslatef(9, 9, 9);
+                gluSphere(object, 4, 50, 10);
             glPopMatrix();
         glPopMatrix();
-
+        
         glDisable(GL_CLIP_PLANE0);
 
     glPopMatrix();

@@ -11,6 +11,7 @@
 #include "Pellet.cpp"
 
 double rx = 0, ry = 0, rz = 0;
+float zoom = 100;
 
 Maze *Labyrinth;
 Pellet *NormalPellet;
@@ -20,6 +21,11 @@ Ghost *GhoClyde;
 Ghost *GhoInky;
 Ghost *GhoPinky;
 Pacman *Pac;
+
+const GLfloat light_ambient[]  = { 0.0f, 0.0f, 0.0f, 1.0f };
+const GLfloat light_diffuse[]  = { 2.0f, 2.0f, 2.0f, 2.0f };
+const GLfloat light_specular[] = { 2.0f, 2.0f, 2.0f, 2.0f };
+const GLfloat light_position[] = { 3.0f, 7.0f, 7.0f, 0.0f };
 
 void initPacman(){
     char arq[] = "Matrix.txt";
@@ -32,7 +38,7 @@ void initPacman(){
     GhoPinky = new Ghost(11*25, 13*25, 255, 105, 180, false); //pinky
     GhoInky = new Ghost(11*25, 11*25, 0, 255, 255, false); //inky
     GhoBlinky = new Ghost(11*25, 9*25, 255, 0, 0, false); //blinky
-    Pac = new Pacman(25, 25, 8);
+    Pac = new Pacman(25, 25, 16);
 }
 
 void init() {
@@ -41,8 +47,18 @@ void init() {
 
     glMatrixMode(GL_MODELVIEW); //define que a matrix � a de proje��o
     glLoadIdentity(); //carrega a matrix de identidade
-    glOrtho(-600, 600, -600, 600, -600, 600); //define uma proje��o ortogonal
+    glOrtho(-zoom, zoom, -zoom, zoom, -zoom, zoom); //define uma proje��o ortogonal
     glPushMatrix();
+    
+    glEnable(GL_LIGHT0);
+    glEnable(GL_NORMALIZE);
+    glEnable(GL_COLOR_MATERIAL);
+    glEnable(GL_LIGHTING);
+
+    glLightfv(GL_LIGHT0, GL_AMBIENT,  light_ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE,  light_diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 }
 
 void keyboardInt(unsigned char key, int x, int y){
@@ -120,8 +136,13 @@ void displayFunc() {
     glRotatef(rx, 1, 0, 0);
     glRotatef(ry, 0, 1, 0);
     glRotatef(rz, 0, 0, 1);
-    glTranslated(-240, -240, 0);
+    //glTranslated(-240, -240, 0);
+    glTranslated(-Pac->getX(), -Pac->getY(), 0);
     Labyrinth->pelletCollision(Pac);
+    GhoBlinky->collision(Pac->getX(), Pac->getY(), 16);
+    GhoClyde->collision(Pac->getX(), Pac->getY(), 16);
+    GhoInky->collision(Pac->getX(), Pac->getY(), 16);
+    GhoPinky->collision(Pac->getX(), Pac->getY(), 16);
     Pac->draw();
 
     Labyrinth->draw();

@@ -6,8 +6,8 @@
 #include <random>
 #include <ctime>
 #define GHOST_UP 1
-#define GHOST_DOWN 2
-#define GHOST_LEFT 3
+#define GHOST_LEFT 2
+#define GHOST_DOWN 3
 #define GHOST_RIGHT 4
 
 class Ghost : public Point{
@@ -24,6 +24,7 @@ public:
     bool walk(int canWalk);
     int getDirection();
     void setDirection(int direction);
+    int collision(float x, float y, float r);
 };
 
 std::mt19937 Ghost::mt = std::mt19937(time(NULL));

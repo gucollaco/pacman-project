@@ -8,12 +8,6 @@ Maze::Maze(int line, int column){
     power = NULL;
 }
 
-int circ(float x, float y, float r, float x1, float y1){
-    float dx = x - (x1);
-    float dy = y - (y1);
-    return dx*dx + dy*dy <= r*r;
-}
-
 int inside(float value){
     return static_cast<int>((value + 12.5) / 25);
 }
@@ -286,66 +280,3 @@ bool Maze::canIncrease(float x, float y, int direcao){
     }
     return true;
 }
-
-/*
-bool Maze::canIncrease(Pacman *Pac, int direcao){
-    float x = Pac->getX();
-    float y = Pac->getY();
-    float r = Pac->getRadius();
-    int l = inside(x);
-    int c = inside(y);
-    int v1, v2, v3;
-    if(direcao == MAZE_UP){
-        v1 = this->getValue(l-1, c+1);
-        v2 = this->getValue(l, c+1);
-        v3 = this->getValue(l+1, c+1);
-        if( c < inside(y+r) ){
-            if(v2 == 1)
-                return 0;
-            if(v3 == 1 && l <= inside(x+r) )
-                return 0;
-            if(v1 == 1 && l >= inside(x-r) )
-                return 0;
-        }
-    }
-    if(direcao == MAZE_DOWN){
-        v1 = this->getValue(l-1, c-1);
-        v2 = this->getValue(l, c-1);
-        v3 = this->getValue(l+1, c-1);
-        if( c > inside(y-r) ){
-            if(v2 == 1)
-                return 0;
-            if(v3 == 1 && l < inside(x+r) )
-                return 0;
-            if(v1 == 1 && l > inside(x-r) )
-                return 0;
-        }
-    }
-    if(direcao == MAZE_LEFT){
-        v1 = this->getValue(l-1, c-1);
-        v2 = this->getValue(l-1, c);
-        v3 = this->getValue(l-1, c+1);
-        if( l > inside(x-r) ){
-            if(v2 == 1)
-                return 0;
-            if(v3 == 1 && c < inside(y+r) )
-                return 0;
-            if(v1 == 1 && c > inside(y-r) )
-                return 0;
-        }
-    }
-    if(direcao == MAZE_RIGHT){
-        v1 = this->getValue(l+1, c-1);
-        v2 = this->getValue(l+1, c);
-        v3 = this->getValue(l+1, c+1);
-        if( l < inside(x+r) ){
-            if(v2 == 1)
-                return 0;
-            if(v3 == 1 && c < inside(y+r) )
-                return 0;
-            if(v1 == 1 && c > inside(y-r) )
-                return 0;
-        }
-    }
-    return 1;
-}*/
