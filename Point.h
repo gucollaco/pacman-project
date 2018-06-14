@@ -11,6 +11,8 @@ class Point {
         void setPoint(float x, float y);
         float getX();
         float getY();
+        void increaseX(float x);
+        void increaseY(float y);
 };
 
 #endif

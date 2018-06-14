@@ -1,8 +1,6 @@
 #ifndef _PELLET_H_
 #define _PELLET_H_
 
-#include <GL/gl.h>
-#include <GL/glu.h>
 #include <GL/glut.h>
 #include "Point.h"
 
@@ -16,6 +14,5 @@ public:
     void setRadius(float valRadius);
     void draw();
 };
-
 
 #endif

@@ -1,17 +1,12 @@
 #ifndef _MAZE_H_
 #define _MAZE_H_
 
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
-
-#include <stdio.h>
-#include <malloc.h>
 #include "Pellet.h"
-#define MAZE_UP 1
-#define MAZE_DOWN 2
-#define MAZE_LEFT 3
-#define MAZE_RIGHT 4
+#include "Pacman.h"
+#define MAZE_UP PAC_UP
+#define MAZE_DOWN PAC_DOWN
+#define MAZE_LEFT PAC_LEFT
+#define MAZE_RIGHT PAC_RIGHT
 
 class Maze{
 private:
@@ -25,11 +20,10 @@ public:
     void setValue(int line, int column, int value);
     int getValue(int line, int column);
     void setPellets(Pellet *normal, Pellet *power);
-    void colisaoPellet(float x, float y, float r);
+    void pelletCollision(Pacman *Pac);
+    bool canIncrease(float x, float y, int direcao);
     void show();
     void draw();
-    bool canIncrease(Maze *maze, float x, float y, int direcao);
 };
-
 
 #endif
