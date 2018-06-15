@@ -12,6 +12,10 @@ int inside(float value){
     return static_cast<int>((value + 12.5) / 25);
 }
 
+int Maze::getNumberOfPellets(){
+    return this->pellets;
+}
+
 int Maze::pelletCollision(float x, float y, int r){
     int l = inside(x);
     int c = inside(y);
@@ -23,9 +27,11 @@ int Maze::pelletCollision(float x, float y, int r){
         switch(this->getValue(l, c)){
             case '0':
             case '1':
+                this->pellets--;
                 this->setValue(l, c, '9');
                 return NORMAL_PELLET;
             case '2':
+                this->pellets--;
                 this->setValue(l, c, '9');
                 return POWER_PELLET;
             default:
@@ -42,7 +48,7 @@ Maze::Maze(char *path_char){
     int i, j;
     char valor;
     std::string path(path_char);
-    
+    this->pellets = 0;
     FILE *temp = fopen(path.c_str(), "r");
     while(temp == NULL){
         printf("Coundn't find maze file, trying again...\n");
@@ -62,6 +68,9 @@ Maze::Maze(char *path_char){
         for(j = 0; j < this->col; j++){
             fscanf(temp, "%c ", &valor);
             this->value[i][j] = valor;
+            if(valor == '1' || valor == '2' || valor == '0'){
+                this->pellets++;
+            }
         }
     }
     normal = NULL;

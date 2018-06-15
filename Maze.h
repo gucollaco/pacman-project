@@ -10,6 +10,7 @@
 class Maze{
 private:
     int **value;     // S�o atributos
+    int pellets;
     int lin, col;
     Pellet *normal, *power;
 public:
@@ -21,6 +22,7 @@ public:
     void setPellets(Pellet *normal, Pellet *power);
     int pelletCollision(float x, float y, int r);
     bool canIncrease(float x, float y, int direcao);
+    int getNumberOfPellets();
     void show();
     void draw();
 };

@@ -11,8 +11,9 @@
 #include "Pacman.cpp"
 #include "Pellet.cpp"
 
+int vida = 3;
 double rx = 0, ry = 0, rz = 0;
-float zoom = 75;
+float zoom = 200;
 time_t tempo = 0;
 
 Maze *Labyrinth;
@@ -28,6 +29,17 @@ const GLfloat light_ambient[]  = { 0.0f, 0.0f, 0.0f, 1.0f };
 const GLfloat light_diffuse[]  = { 2.0f, 2.0f, 2.0f, 2.0f };
 const GLfloat light_specular[] = { 2.0f, 2.0f, 2.0f, 2.0f };
 const GLfloat light_position[] = { 3.0f, 7.0f, 7.0f, 0.0f };
+
+void output(GLfloat x, GLfloat y, char* text)
+{
+    glPushMatrix();
+    glRasterPos2f(x, y);
+    for( char* p = text; *p; p++)
+    {
+        glutBitmapCharacter(GLUT_BITMAP_9_BY_15, *p);
+    }
+    glPopMatrix();
+}
 
 void initPacman(){
     char arq[] = "Matrix.txt";
@@ -147,22 +159,45 @@ void displayFunc() {
         tempo = 0;
     }
     test = GhoBlinky->collision(Pac->getX(), Pac->getY(), 16);
-    if(test == 2) Pac->reset();
+    if(test == 2){
+        Pac->reset();
+        vida--;
+    } 
     test = GhoClyde->collision(Pac->getX(), Pac->getY(), 16);
-    if(test == 2) Pac->reset();
+    if(test == 2){
+        Pac->reset();
+        vida--;
+    }
     test = GhoInky->collision(Pac->getX(), Pac->getY(), 16);
-    if(test == 2) Pac->reset();
+    if(test == 2){
+        Pac->reset();
+        vida--;
+    }
     test = GhoPinky->collision(Pac->getX(), Pac->getY(), 16);
-    if(test == 2) Pac->reset();
-    
-    Pac->draw();
-
-    Labyrinth->draw();
-    GhoClyde->draw();
-    GhoPinky->draw();
-    GhoInky->draw();
-    GhoBlinky->draw();
-
+    if(test == 2){
+        Pac->reset();
+        vida--;
+    }
+    if(Labyrinth->getNumberOfPellets() < 1){
+        glPopMatrix();
+        glPushMatrix();
+        char msg[] = "GAME OVER";
+        output(0,0, msg);
+    }
+    else if(vida < 1){
+        char msg[] = "PERDEU";
+        glPopMatrix();
+        glPushMatrix();
+        output(0,0, msg);
+    }
+    else{
+        Pac->draw();
+        Labyrinth->draw();
+        GhoClyde->draw();
+        GhoPinky->draw();
+        GhoInky->draw();
+        GhoBlinky->draw();
+    }
     glutSwapBuffers();
 }
 
