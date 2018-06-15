@@ -12,10 +12,7 @@ int inside(float value){
     return static_cast<int>((value + 12.5) / 25);
 }
 
-int Maze::pelletCollision(Pacman *Pac){
-    float x = Pac->getX();
-    float y = Pac->getY();
-    float r = Pac->getRadius();
+int Maze::pelletCollision(float x, float y, int r){
     int l = inside(x);
     int c = inside(y);
     float x1 = 25*l;
@@ -25,6 +22,7 @@ int Maze::pelletCollision(Pacman *Pac){
     if (dx*dx + dy*dy <= r*r){
         switch(this->getValue(l, c)){
             case '0':
+            case '1':
                 this->setValue(l, c, '9');
                 return NORMAL_PELLET;
             case '2':
@@ -90,6 +88,7 @@ void Maze::draw(){
         for(j = 0; j < this->col; j++){
             switch(this->getValue(i, j)){
             case '0':
+            case '1':
                 glColor3ub(230, 220, 175);
                 normal->setPoint(i*25, j*25);
                 normal->draw();
@@ -255,6 +254,10 @@ void Maze::setPellets(Pellet *normal, Pellet *power){
     this->power = power;
 }
 
+bool isWall(char c){
+    return (c != '0' && c != '9' && c != '2' && c != '1' && c != '8' && c != '7');
+}
+
 bool Maze::canIncrease(float x, float y, int direcao){
     int l = inside(x);
     int c = inside(y);
@@ -264,28 +267,28 @@ bool Maze::canIncrease(float x, float y, int direcao){
             v = this->getValue(l, c+1);
             if( x/25 != (int)x/25 )
                 return false;
-            if( c < inside(y+13) && (v != '0' && v != '9' && v != '2') )
+            if( c < inside(y+13) &&  isWall(v))
                 return false;
             break;
         case MAZE_DOWN:
             v = this->getValue(l, c-1);
             if( x/25 != (int)x/25 )
                 return false;
-            if( c > inside(y-13) && (v != '0' && v != '9' && v != '2') )
+            if( c > inside(y-13) && isWall(v) )
                 return false;
             break;
         case MAZE_LEFT:
             v = this->getValue(l-1, c);
             if( y/25 != (int)y/25 )
                 return false;
-            if( l > inside(x-13) && (v != '0' && v != '9' && v != '2') )
+            if( l > inside(x-13) && isWall(v) )
                 return false;
             break;
         case MAZE_RIGHT:
             v = this->getValue(l+1, c);
             if( y/25 != (int)y/25 )
                 return false;
-            if( l < inside(x+13) && (v != '0' && v != '9' && v != '2') )
+            if( l < inside(x+13) && isWall(v) )
                 return false;
             break;
         default:

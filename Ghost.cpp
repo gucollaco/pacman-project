@@ -8,29 +8,57 @@ Ghost::Ghost(int valX, int valY, int valR, int valG, int valB, bool rev) : Point
     this->object = gluNewQuadric();
 }
 
-bool Ghost::walk(int canWalk){
-    if(canWalk){
-        switch(this->direction){
-        case GHOST_UP:
-            this->increaseY(12.5);
-            break;
-        case GHOST_DOWN:
-            this->increaseY(-12.5);
-            break;
-        case GHOST_LEFT:
-            this->increaseX(-12.5);
-            break;
-        case GHOST_RIGHT:
-            this->increaseX(12.5);
-            break;
+int inside2(float value){
+    return static_cast<int>((value + 12.5) / 25);
+}
+
+bool Ghost::walk(Maze *maze){
+    bool canWalk, decision = true;
+    char value;
+    float x = this->getX();
+    float y = this->getY();
+    int l = inside2(x);
+    int c = inside2(y);
+    if( x/25 != (int)x/25 || y/25 != (int)y/25 )
+        decision = false;
+    if( decision ){
+        value = maze->getValue(l, c);
+        if(value == '1' || value == '8' || value == '7'){
+            do{
+                this->direction = dist(mt);
+                canWalk = maze->canIncrease(this->getX(), this->getY(), this->direction);
+            }while(!canWalk);
         }
-        return true;
+        else{
+            canWalk = maze->canIncrease(this->getX(), this->getY(), this->direction);
+            while(!canWalk){
+                this->direction = dist(mt);
+                canWalk = maze->canIncrease(this->getX(), this->getY(), this->direction);
+            }    
+        }
     }
     else{
-        int d = this->dist(this->mt);
-        this->setDirection(d);
+        canWalk = maze->canIncrease(this->getX(), this->getY(), this->direction);
+        while(!canWalk){
+            this->direction = dist(mt);
+            canWalk = maze->canIncrease(this->getX(), this->getY(), this->direction);
+        }
     }
-    return false;
+    switch(this->direction){
+    case GHOST_UP:
+        this->increaseY(12.5);
+        break;
+    case GHOST_DOWN:
+        this->increaseY(-12.5);
+        break;
+    case GHOST_LEFT:
+        this->increaseX(-12.5);
+        break;
+    case GHOST_RIGHT:
+        this->increaseX(12.5);
+        break;
+    }
+    return true;
 }
 
 void Ghost::setDirection(int direction){
@@ -47,10 +75,6 @@ void Ghost::setReversed(bool reversed){
 
 bool Ghost::getReversed(){
     return this->isReversed;
-}
-
-int inside2(float value){
-    return static_cast<int>((value + 12.5) / 25);
 }
 
 int Ghost::collision(float x, float y, float r){

@@ -3,12 +3,13 @@
 
 #include <GL/glut.h>
 #include "Point.h"
+#include "Maze.h"
 #include <random>
 #include <ctime>
-#define GHOST_UP 1
-#define GHOST_LEFT 2
-#define GHOST_DOWN 3
-#define GHOST_RIGHT 4
+#define GHOST_UP MAZE_UP
+#define GHOST_LEFT MAZE_LEFT
+#define GHOST_DOWN MAZE_DOWN
+#define GHOST_RIGHT MAZE_RIGHT
 
 class Ghost : public Point{
 private:
@@ -21,7 +22,7 @@ private:
 public:
     Ghost(int valX, int valY, int valR, int valG, int valB, bool rev);
     void draw();
-    bool walk(int canWalk);
+    bool walk(Maze *maze);
     int getDirection();
     bool getReversed();
     void setReversed(bool reversed);

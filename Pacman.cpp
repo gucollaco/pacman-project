@@ -7,7 +7,31 @@ Pacman::Pacman(float valX, float valY, float valRadius) : Point(valX, valY) {
     animation = 60;
 }
 
-void Pacman::walk(int canWalk){
+int inside3(float value){
+    return static_cast<int>((value + 12.5) / 25);
+}
+
+void Pacman::walk(Maze *maze){
+    bool canWalk, decision = true;
+    char value;
+    float x = this->getX();
+    float y = this->getY();
+    int l = inside3(x);
+    int c = inside3(y);
+    if( x/25 != (int)x/25 || y/25 != (int)y/25 )
+        decision = false;
+    if(decision){
+        value = maze->getValue(l, c);
+        if(value == '7'){
+            if(this->getY() == 0){
+                this->setY(27*25);
+            }
+            else{
+                this->setY(25);
+            }
+        }
+    }
+    canWalk = maze->canIncrease(this->getX(), this->getY(), this->direction);
     if(canWalk){
         switch(this->direction){
         case PAC_UP:

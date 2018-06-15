@@ -2,11 +2,10 @@
 #define _MAZE_H_
 
 #include "Pellet.h"
-#include "Pacman.h"
-#define MAZE_UP PAC_UP
-#define MAZE_DOWN PAC_DOWN
-#define MAZE_LEFT PAC_LEFT
-#define MAZE_RIGHT PAC_RIGHT
+#define MAZE_UP 1
+#define MAZE_DOWN 3
+#define MAZE_LEFT 2
+#define MAZE_RIGHT 4
 
 class Maze{
 private:
@@ -20,7 +19,7 @@ public:
     void setValue(int line, int column, int value);
     int getValue(int line, int column);
     void setPellets(Pellet *normal, Pellet *power);
-    int pelletCollision(Pacman *Pac);
+    int pelletCollision(float x, float y, int r);
     bool canIncrease(float x, float y, int direcao);
     void show();
     void draw();

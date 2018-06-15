@@ -3,10 +3,11 @@
 
 #include <GL/glut.h>
 #include "Point.h"
-#define PAC_UP 1
-#define PAC_LEFT 2
-#define PAC_DOWN 3
-#define PAC_RIGHT 4
+#include "Maze.h"
+#define PAC_UP MAZE_UP
+#define PAC_LEFT MAZE_LEFT
+#define PAC_DOWN MAZE_DOWN
+#define PAC_RIGHT MAZE_RIGHT
 
 class Pacman : public Point {
     private:
@@ -22,7 +23,7 @@ class Pacman : public Point {
         float getRadius();
         void setDirection(int direction);
         int getDirection();
-        void walk(int canWalk);
+        void walk(Maze *maze);
 };
 
 #endif
