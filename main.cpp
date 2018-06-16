@@ -13,7 +13,7 @@
 
 int vida = 3;
 double rx = 0, ry = 0, rz = 0;
-float zoom = 200;
+float zoom = 100;
 time_t tempo = 0;
 
 Maze *Labyrinth;
@@ -30,11 +30,11 @@ const GLfloat light_diffuse[]  = { 2.0f, 2.0f, 2.0f, 2.0f };
 const GLfloat light_specular[] = { 2.0f, 2.0f, 2.0f, 2.0f };
 const GLfloat light_position[] = { 3.0f, 7.0f, 7.0f, 0.0f };
 
-void output(GLfloat x, GLfloat y, char* text)
+void output(GLfloat x, GLfloat y, const char* text)
 {
     glPushMatrix();
     glRasterPos2f(x, y);
-    for( char* p = text; *p; p++)
+    for(const char* p = text; *p; p++)
     {
         glutBitmapCharacter(GLUT_BITMAP_9_BY_15, *p);
     }
@@ -52,7 +52,7 @@ void initPacman(){
     GhoPinky = new Ghost(11*25, 13*25, 255, 105, 180, false); //pinky
     GhoInky = new Ghost(11*25, 11*25, 0, 255, 255, false); //inky
     GhoBlinky = new Ghost(11*25, 9*25, 255, 0, 0, false); //blinky
-    Pac = new Pacman(25, 25, 16);
+    Pac = new Pacman(25*23, 25*13.5, 16);
 }
 
 void init() {
@@ -139,10 +139,20 @@ void displayFunc() {
     glColor3ub(0,0,255);
     glPopMatrix();
     glPushMatrix();
-    glRotatef(rx, 1, 0, 0);
+    int Number = 123;       // number to be converted to a string
+    std::string Result;          // string which will contain the result
+    std::ostringstream convert, convert2;   // stream used for the conversion
+    convert << "PELLETS: " << Labyrinth->getNumberOfPellets();      // insert the textual representation of 'Number' in the characters in the stream
+    convert2 << "LIFE: " << vida;
+    Result = convert.str(); 
+    output(-180, -180, Result.c_str());
+    Result = convert2.str(); 
+    output(150,-180, Result.c_str());
+    glRotatef(-50, 1, 0, 0);
     glRotatef(ry, 0, 1, 0);
-    glRotatef(rz, 0, 0, 1);
+    glRotatef(20, 0, 0, 1);
     //glTranslated(-240, -240, 0);
+    
     glTranslated(-Pac->getX(), -Pac->getY(), 0);
     if( POWER_PELLET == Labyrinth->pelletCollision(Pac->getX(), Pac->getY(), Pac->getRadius())){
         GhoBlinky->setReversed(true);
@@ -181,16 +191,17 @@ void displayFunc() {
     if(Labyrinth->getNumberOfPellets() < 1){
         glPopMatrix();
         glPushMatrix();
-        char msg[] = "GAME OVER";
+        char msg[] = "YOU WIN";
         output(0,0, msg);
     }
     else if(vida < 1){
-        char msg[] = "PERDEU";
+        char msg[] = "YOU LOSE";
         glPopMatrix();
         glPushMatrix();
         output(0,0, msg);
     }
     else{
+        
         Pac->draw();
         Labyrinth->draw();
         GhoClyde->draw();
