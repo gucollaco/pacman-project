@@ -1,6 +1,8 @@
 #ifndef _PACMAN_H_
 #define _PACMAN_H_
 
+#include <GL/gl.h>
+#include <GL/glu.h>
 #include <GL/glut.h>
 #include "Point.h"
 #include "Maze.h"

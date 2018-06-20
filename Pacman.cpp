@@ -1,4 +1,5 @@
 #include "Pacman.h"
+#include "Color.h"
 
 Pacman::Pacman(float valX, float valY, float valRadius) : Point(valX, valY) {
     this->setRadius(radius);
@@ -77,7 +78,7 @@ void Pacman::draw(){
         glRotatef(90.0*direction, 0.0, 1.0, 0.0);
         glRotatef(10, 0, 0, 1);
         glPushMatrix();
-            glColor3ub(255, 255, 0);
+            glColor(YELLOW);
             double clip[2][4] = {{ 5.0, 0.0, 0.0, 1.0 }, { -5.0, 0.0, 0.0, 1.0 }};
             glEnable(GL_CLIP_PLANE0);
                 glPushMatrix();
@@ -100,7 +101,7 @@ void Pacman::draw(){
 
         glPushMatrix();
             glDisable(GL_CLIP_PLANE0);
-            glColor3ub(0, 0, 0);
+            glColor(BLACK);
             glPushMatrix();
                 glRotatef(20, 0.0, 0.0, 1.0);
                 glRotatef(20, 0.0, 1.0, 0.0);

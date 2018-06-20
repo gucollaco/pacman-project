@@ -1,4 +1,5 @@
 #include "Ghost.h"
+#include "Random.h"
 
 Ghost::Ghost(int valX, int valY, int valR, int valG, int valB, bool rev) : Point(valX, valY) {
     this->color.r = valR;
@@ -45,14 +46,14 @@ bool Ghost::walk(Maze *maze){
         value = maze->getValue(l, c);
         if(value == '1' || value == '8' || value == '7'){
             do{
-                this->direction = dist(mt);
+                this->direction = Random::next(4);
                 canWalk = maze->canIncrease(this->getX(), this->getY(), this->direction);
             }while(!canWalk);
         }
         else{
             canWalk = maze->canIncrease(this->getX(), this->getY(), this->direction);
             while(!canWalk){
-                this->direction = dist(mt);
+                this->direction = Random::next(4);
                 canWalk = maze->canIncrease(this->getX(), this->getY(), this->direction);
             }    
         }
@@ -60,7 +61,7 @@ bool Ghost::walk(Maze *maze){
     else{
         canWalk = maze->canIncrease(this->getX(), this->getY(), this->direction);
         while(!canWalk){
-            this->direction = dist(mt);
+            this->direction = Random::next(4);
             canWalk = maze->canIncrease(this->getX(), this->getY(), this->direction);
         }
     }

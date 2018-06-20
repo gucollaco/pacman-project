@@ -1,19 +1,22 @@
 #include <stdio.h>
 #include <math.h>
 #include <ctime>
+#include <sstream>
 
 #include "Maze.h"
 #include "Ghost.h"
 #include "Pacman.h"
-#include "Maze.cpp"
-#include "Ghost.cpp"
-#include "Point.cpp"
-#include "Pacman.cpp"
-#include "Pellet.cpp"
+#include "Random.h"
+//#include "Maze.cpp"
+//#include "Ghost.cpp"
+//#include "Point.cpp"
+//#include "Pacman.cpp"
+//#include "Pellet.cpp"
+
 
 int vida = 3;
 double rx = 0, ry = 0, rz = 0;
-float zoom = 100;
+float zoom = 600;
 time_t tempo = 0;
 
 Maze *Labyrinth;
@@ -79,28 +82,34 @@ void init() {
     glLightfv(GL_LIGHT0, GL_DIFFUSE,  light_diffuse);
     glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
     glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+    Random::seed(1);
 }
 
 void keyboardInt(unsigned char key, int x, int y){
     switch(key){
+        case 'D':
         case 'd':
             if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_RIGHT)){
                     Pac->setDirection(MAZE_RIGHT);
                 //Pac->walk();
             } 
             break;
+        case 'A':
         case 'a':
             if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_LEFT)){
                     Pac->setDirection(MAZE_LEFT);
                 //Pac->walk();
             } 
             break;
+        case 'W':
         case 'w':
             if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_UP)){
                     Pac->setDirection(MAZE_UP);
                 //Pac->walk();
             }
             break;
+        case 'S':
         case 's':
             if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_DOWN)){
                     Pac->setDirection(MAZE_DOWN);

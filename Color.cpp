@@ -4,10 +4,10 @@
 
 #include "Color.h"
 void glColor(Color c){
-    glColor4ub(c.r, c.b, c.g, c.a);
+    glColor4ub(static_cast<GLubyte>(c.r), static_cast<GLubyte>(c.g), static_cast<GLubyte>(c.b), static_cast<GLubyte>(c.a));
 }
 
-void void glColor(int* c){
+void glColor(int* c){
     glColor(Color(c));
 }
 
