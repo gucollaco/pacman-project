@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include <list>
 #include <ctime>
 #include <sstream>
 
@@ -7,6 +8,7 @@
 #include "Ghost.h"
 #include "Pacman.h"
 #include "Random.h"
+#include "glh.h"
 //#include "Maze.cpp"
 //#include "Ghost.cpp"
 //#include "Point.cpp"
@@ -28,6 +30,8 @@ Ghost *GhoBlinky;
 Ghost *GhoClyde;
 Ghost *GhoInky;
 Ghost *GhoPinky;
+
+std::list<Ghost*> Ghosts;
 Pacman *Pac;
 
 const GLfloat light_ambient[]  = { 0.0f, 0.0f, 0.0f, 1.0f };
@@ -35,16 +39,8 @@ const GLfloat light_diffuse[]  = { 2.0f, 2.0f, 2.0f, 2.0f };
 const GLfloat light_specular[] = { 2.0f, 2.0f, 2.0f, 2.0f };
 const GLfloat light_position[] = { 3.0f, 7.0f, 7.0f, 0.0f };
 
-void output(GLfloat x, GLfloat y, const char* text)
-{
-    glPushMatrix();
-    glRasterPos2f(x, y);
-    for(const char* p = text; *p; p++)
-    {
-        glutBitmapCharacter(GLUT_BITMAP_9_BY_15, *p);
-    }
-    glPopMatrix();
-}
+const int FRAME_RATE = 60;
+
 
 void initPacman(){
     char arq[] = "Matrix.txt";
@@ -61,7 +57,15 @@ void initPacman(){
     GhoInky = new Ghost(11*25, 11*25, Color(CYAN), false); //inky
     GhoBlinky = new Ghost(11*5, 9*25, Color(RED), false); //blinky
 
+    Ghosts.push_back(GhoClyde);
+    Ghosts.push_back(GhoPinky);
+    Ghosts.push_back(GhoInky);
+    Ghosts.push_back(GhoBlinky);
+
     Pac = new Pacman(23*25, 13.5*25, 16);
+
+    //Pac->setSpeed(8.0);
+    for(Ghost* g : Ghosts) g->setSpeed(8.0);
 }
 
 void init() {
@@ -91,29 +95,25 @@ void keyboardInt(unsigned char key, int x, int y){
         case 'D':
         case 'd':
             if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_RIGHT)){
-                    Pac->setDirection(MAZE_RIGHT);
-                //Pac->walk();
+                Pac->setDirection(MAZE_RIGHT);
             } 
             break;
         case 'A':
         case 'a':
             if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_LEFT)){
-                    Pac->setDirection(MAZE_LEFT);
-                //Pac->walk();
-            } 
+                Pac->setDirection(MAZE_LEFT);
+            }
             break;
         case 'W':
         case 'w':
             if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_UP)){
-                    Pac->setDirection(MAZE_UP);
-                //Pac->walk();
+                Pac->setDirection(MAZE_UP);
             }
             break;
         case 'S':
         case 's':
             if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_DOWN)){
-                    Pac->setDirection(MAZE_DOWN);
-                //Pac->walk();
+                Pac->setDirection(MAZE_DOWN);
             } 
             break;
     }
@@ -140,12 +140,10 @@ void specialInt(int key, int x, int y){
 
 void timerFunc(int value){
     Pac->walk(Labyrinth);
-    GhoBlinky->walk(Labyrinth);
-    GhoClyde->walk(Labyrinth);
-    GhoPinky->walk(Labyrinth);
-    GhoInky->walk(Labyrinth);
+    for(Ghost* g : Ghosts) g->walk(Labyrinth);
+
     glutPostRedisplay();
-    glutTimerFunc(200, timerFunc, value);
+    glutTimerFunc(FRAME_RATE, timerFunc, value);
 }
 
 void displayFunc() {
@@ -155,15 +153,10 @@ void displayFunc() {
     glColor(BLUE);
     glPopMatrix();
     glPushMatrix();
-    int Number = 123;       // number to be converted to a string
-    std::string Result;          // string which will contain the result
-    std::ostringstream convert, convert2;   // stream used for the conversion
-    convert << "PELLETS: " << Labyrinth->getNumberOfPellets();      // insert the textual representation of 'Number' in the characters in the stream
-    convert2 << "LIFE: " << vida;
-    Result = convert.str(); 
-    output(-180, -180, Result.c_str());
-    Result = convert2.str(); 
-    output(150,-180, Result.c_str());
+
+    glText(format("PELLETS: %d", Labyrinth->getNumberOfPellets()), -180, -180);
+    glText(format("LIFE: %d", vida), 150, -180);
+
     glRotatef(-50, 1, 0, 0);
     //glRotatef(ry, 0, 1, 0);
     //glRotatef(20, 0, 0, 1);
@@ -171,59 +164,39 @@ void displayFunc() {
     
     glTranslated(-Pac->getX(), -Pac->getY(), 0);
     if( POWER_PELLET == Labyrinth->pelletCollision(Pac->getX(), Pac->getY(), Pac->getRadius())){
-        GhoBlinky->setReversed(true);
-        GhoClyde->setReversed(true);
-        GhoInky->setReversed(true);
-        GhoPinky->setReversed(true);
+        for(Ghost* g : Ghosts) g->setReversed(true);
         tempo = time(NULL) + 5;
     }
+
     if(tempo != 0 && tempo < time(NULL)){
-        GhoBlinky->setReversed(false);
-        GhoClyde->setReversed(false);
-        GhoInky->setReversed(false);
-        GhoPinky->setReversed(false);
+        for(Ghost* g : Ghosts) g->setReversed(false);
         tempo = 0;
     }
-    test = GhoBlinky->collision(Pac->getX(), Pac->getY(), 16);
-    if(test == 2){
-        Pac->reset();
-        vida--;
-    } 
-    test = GhoClyde->collision(Pac->getX(), Pac->getY(), 16);
-    if(test == 2){
-        Pac->reset();
-        vida--;
+
+
+    for(Ghost* g : Ghosts) {
+        test = g->collision(Pac->getX(), Pac->getY(), 16);
+        if (test == 2){
+            Pac->reset();
+            vida--;
+            break;
+        }
     }
-    test = GhoInky->collision(Pac->getX(), Pac->getY(), 16);
-    if(test == 2){
-        Pac->reset();
-        vida--;
-    }
-    test = GhoPinky->collision(Pac->getX(), Pac->getY(), 16);
-    if(test == 2){
-        Pac->reset();
-        vida--;
-    }
+
     if(Labyrinth->getNumberOfPellets() < 1){
         glPopMatrix();
         glPushMatrix();
-        char msg[] = "YOU WIN";
-        output(0,0, msg);
-    }
-    else if(vida < 1){
-        char msg[] = "YOU LOSE";
+        glText("YOU WIN", 0, 0);
+    } else if(vida < 1){
         glPopMatrix();
         glPushMatrix();
-        output(0,0, msg);
-    }
-    else{
-        
+        glColor(WHITE);
+        glText("YOU LOSE", 0, 0);
+    } else{
         Pac->draw();
         Labyrinth->draw();
-        GhoClyde->draw();
-        GhoPinky->draw();
-        GhoInky->draw();
-        GhoBlinky->draw();
+        for(Ghost* g : Ghosts)
+            g->draw();
     }
 
     glutSwapBuffers();
@@ -240,7 +213,7 @@ int main(int argc, char *argv[]){
     glutDisplayFunc(displayFunc);
     glutSpecialFunc(specialInt);
     glutKeyboardFunc(keyboardInt);
-    glutTimerFunc(200, timerFunc, 0);
+    glutTimerFunc(FRAME_RATE, timerFunc, 0);
 	init();
 	glutMainLoop();
 	return 0;

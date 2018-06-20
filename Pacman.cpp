@@ -6,10 +6,23 @@ Pacman::Pacman(float valX, float valY, float valRadius) : Point(valX, valY) {
     object = gluNewQuadric();
     inc = 7.5;
     animation = 60;
+    speed = 12.5;
+}
+
+void Pacman::setSpeed(float speed){
+    this->speed = speed;
+}
+
+float Pacman::getSpeed(){
+    return this->speed;
 }
 
 int inside3(float value){
     return static_cast<int>((value + 12.5) / 25);
+}
+
+int inside3(float value, float speed){
+    return static_cast<int>((value + speed) / 25);
 }
 
 void Pacman::walk(Maze *maze){
@@ -17,13 +30,13 @@ void Pacman::walk(Maze *maze){
     char value;
     float x = this->getX();
     float y = this->getY();
-    int l = inside3(x);
-    int c = inside3(y);
+    int l = inside3(x, this->speed);
+    int c = inside3(y, this->speed);
     if( x/25 != (int)x/25 || y/25 != (int)y/25 )
         decision = false;
     if(decision){
         value = maze->getValue(l, c);
-        if(value == '7'){
+        if(value == MATRIX_TELLEPORT_TILE){
             if(this->getY() == 0){
                 this->setY(27*25);
             }
@@ -36,16 +49,16 @@ void Pacman::walk(Maze *maze){
     if(canWalk){
         switch(this->direction){
         case PAC_UP:
-            this->increaseY(12.5);
+            this->increaseY(this->speed);
             break;
         case PAC_DOWN:
-            this->increaseY(-12.5);
+            this->increaseY(-this->speed);
             break;
         case PAC_LEFT:
-            this->increaseX(-12.5);
+            this->increaseX(-this->speed);
             break;
         case PAC_RIGHT:
-            this->increaseX(12.5);
+            this->increaseX(this->speed);
             break;
         }
         if(animation >= 90 || animation <= 45)

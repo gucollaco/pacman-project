@@ -18,6 +18,8 @@ class Pacman : public Point {
         float animation;
         float inc;
         GLUquadricObj *object;
+
+        float speed;
     public:
         Pacman(float valX, float valY, float valRadius);
         void draw();
@@ -26,6 +28,8 @@ class Pacman : public Point {
         void setDirection(int direction);
         int getDirection();
         void walk(Maze *maze);
+        void setSpeed(float speed);
+        float getSpeed();
 };
 
 #endif

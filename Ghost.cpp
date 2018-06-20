@@ -7,12 +7,14 @@ Ghost::Ghost(int valX, int valY, int valR, int valG, int valB, bool rev) : Point
     this->color.b = valB;
     this->isReversed = rev;
     this->object = gluNewQuadric();
+    this->speed = 12.5;
 }
 
 Ghost::Ghost(int valX, int valY, Color valColor, bool rev) : Point(valX, valY) {
     this->color = valColor;
     this->isReversed = rev;
     this->object = gluNewQuadric();
+    this->speed = 12.5;
 }
 
 Ghost::Ghost(Point valPoint, int valR, int valG, int valB, bool rev) : Point(valPoint.getX(), valPoint.getY()) {
@@ -21,16 +23,30 @@ Ghost::Ghost(Point valPoint, int valR, int valG, int valB, bool rev) : Point(val
     this->color.b = valB;
     this->isReversed = rev;
     this->object = gluNewQuadric();
+    this->speed = 12.5;
 }
 
 Ghost::Ghost(Point valPoint, Color valColor, bool rev) : Point(valPoint.getX(), valPoint.getY()) {
     this->color = valColor;
     this->isReversed = rev;
     this->object = gluNewQuadric();
+    this->speed = 12.5;
+}
+
+void Ghost::setSpeed(float speed){
+    this->speed = speed;
+}
+
+float Ghost::getSpeed(){
+    return this->speed;
 }
 
 int inside2(float value){
     return static_cast<int>((value + 12.5) / 25);
+}
+
+int inside2(float value, float speed){
+    return static_cast<int>((value + speed) / 25);
 }
 
 bool Ghost::walk(Maze *maze){
@@ -38,13 +54,13 @@ bool Ghost::walk(Maze *maze){
     char value;
     float x = this->getX();
     float y = this->getY();
-    int l = inside2(x);
-    int c = inside2(y);
+    int l = inside2(x, this->speed);
+    int c = inside2(y, this->speed);
     if( x/25 != (int)x/25 || y/25 != (int)y/25 )
         decision = false;
     if( decision ){
         value = maze->getValue(l, c);
-        if(value == '1' || value == '8' || value == '7'){
+        if(value == MATRIX_TURNING_PELLET || value == MATRIX_TURNING_POINT || value == MATRIX_TELLEPORT_TILE){
             do{
                 this->direction = Random::next(4);
                 canWalk = maze->canIncrease(this->getX(), this->getY(), this->direction);
@@ -67,16 +83,16 @@ bool Ghost::walk(Maze *maze){
     }
     switch(this->direction){
     case GHOST_UP:
-        this->increaseY(12.5);
+        this->increaseY(this->speed);
         break;
     case GHOST_DOWN:
-        this->increaseY(-12.5);
+        this->increaseY(-this->speed);
         break;
     case GHOST_LEFT:
-        this->increaseX(-12.5);
+        this->increaseX(-this->speed);
         break;
     case GHOST_RIGHT:
-        this->increaseX(12.5);
+        this->increaseX(this->speed);
         break;
     }
     return true;
@@ -101,8 +117,8 @@ bool Ghost::getReversed(){
 int Ghost::collision(float x, float y, float r){
     float x1 = this->getX();
     float y1 = this->getY();
-    int l = inside2(x1);
-    int c = inside2(y1);
+    int l = inside2(x1, this->speed);
+    int c = inside2(y1, this->speed);
     x1 = l*25;
     y1 = c*25;
     float dx = x - x1;

@@ -2,6 +2,7 @@
 #define _MAZE_H_
 
 #include "Pellet.h"
+#include "Color.h"
 #define MAZE_UP 1
 #define MAZE_DOWN 3
 #define MAZE_LEFT 2
@@ -25,6 +26,10 @@
 #define MATRIX_INNER_TOP_RIGHT_WALL 'f'
 #define MATRIX_INNER_BOTTOM_LEFT_WALL 'g'
 #define MATRIX_INNER_BOTTOM_RIGHT_WALL 'h'
+
+#define WALL_COLOR BLUE
+#define PELLET_COLOR SAND
+#define POWER_PELLET_COLOR BROWN_BEIGE
 
 class Maze{
 private:

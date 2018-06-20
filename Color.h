@@ -20,7 +20,7 @@
 #define YELLOW {255, 255, 0}
 #define BROWN_BEIGE {205, 130, 65}
 
-
+#define NAVAL {0, 0, 128}
 
 #include <GL/gl.h>
 #include <GL/glu.h>

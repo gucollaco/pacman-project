@@ -17,6 +17,7 @@ class Ghost : public Point{
 private:
     Color color;
     int direction;
+    float speed;
 
     bool isReversed;
     GLUquadricObj *object;
@@ -33,6 +34,9 @@ public:
     void setReversed(bool reversed);
     void setDirection(int direction);
     int collision(float x, float y, float r);
+
+    void setSpeed(float speed);
+    float getSpeed();
 };
 
 #endif

@@ -3,7 +3,6 @@
 #include <malloc.h>
 #include <cstdlib>
 #include "Maze.h"
-#include "Color.h"
 
 Maze::Maze(int line, int column){
     this->alloc(line, column);
@@ -13,6 +12,10 @@ Maze::Maze(int line, int column){
 
 int inside(float value){
     return static_cast<int>((value + 12.5) / 25);
+}
+
+int inside(float value, float speed){
+    return static_cast<int>((value + speed) / 25);
 }
 
 int Maze::getNumberOfPellets(){
@@ -102,19 +105,19 @@ void Maze::draw(){
 
                 case MATRIX_COMMON_PELLET:
                 case MATRIX_TURNING_PELLET:
-                    glColor(SAND);
+                    glColor(PELLET_COLOR);
 
                     normal->setPoint(i*25, j*25);
                     normal->draw();
                     break;
                 case MATRIX_POWER_PELLET:
-                    glColor(BROWN_BEIGE);
+                    glColor(POWER_PELLET_COLOR);
 
                     power->setPoint(i*25, j*25);
                     power->draw();
                     break;
                 case MATRIX_TOP_WALL:
-                    glColor(BLUE);
+                    glColor(WALL_COLOR);
 
                     glPushMatrix();
                     glTranslated(i*25, j*25, 0);
@@ -125,7 +128,7 @@ void Maze::draw(){
                     glPopMatrix();
                     break;
                 case MATRIX_BOTTOM_WALL:
-                    glColor(BLUE);
+                    glColor(WALL_COLOR);
 
                     glPushMatrix();
                     glTranslated(i*25, j*25, 0);
@@ -136,7 +139,7 @@ void Maze::draw(){
                     glPopMatrix();
                     break;
                 case MATRIX_LEFT_WALL:
-                    glColor(BLUE);
+                    glColor(WALL_COLOR);
 
                     glPushMatrix();
                     glTranslated(i*25, j*25, 0);
@@ -147,7 +150,7 @@ void Maze::draw(){
                     glPopMatrix();
                     break;
                 case MATRIX_RIGHT_WALL:
-                    glColor(BLUE);
+                    glColor(WALL_COLOR);
 
                     glPushMatrix();
                     glTranslated(i*25, j*25, 0);
@@ -158,7 +161,7 @@ void Maze::draw(){
                     glPopMatrix();
                     break;
                 case MATRIX_TOP_LEFT_WALL:
-                    glColor(BLUE);
+                    glColor(WALL_COLOR);
 
                     glPushMatrix();
                     glTranslated(i*25, j*25, 0);
@@ -171,7 +174,7 @@ void Maze::draw(){
                     glPopMatrix();
                     break;
                 case MATRIX_TOP_RIGHT_WALL:
-                    glColor(BLUE);
+                    glColor(WALL_COLOR);
 
                     glPushMatrix();
                     glTranslated(i*25, j*25, 0);
@@ -184,7 +187,7 @@ void Maze::draw(){
                     glPopMatrix();
                     break;
                 case MATRIX_BOTTOM_LEFT_WALL:
-                    glColor(BLUE);
+                    glColor(WALL_COLOR);
 
                     glPushMatrix();
                     glTranslated(i*25, j*25, 0);
@@ -197,7 +200,7 @@ void Maze::draw(){
                     glPopMatrix();
                     break;
                 case MATRIX_BOTTOM_RIGHT_WALL:
-                    glColor(BLUE);
+                    glColor(WALL_COLOR);
 
                     glPushMatrix();
                     glTranslated(i*25, j*25, 0);
@@ -210,7 +213,7 @@ void Maze::draw(){
                     glPopMatrix();
                     break;
                 case MATRIX_INNER_TOP_LEFT_WALL:
-                    glColor(BLUE);
+                    glColor(WALL_COLOR);
 
                     glPushMatrix();
                     glTranslated(i*25, j*25, 0);
@@ -219,7 +222,7 @@ void Maze::draw(){
                     glPopMatrix();
                     break;
                 case MATRIX_INNER_TOP_RIGHT_WALL:
-                    glColor(BLUE);
+                    glColor(WALL_COLOR);
 
                     glPushMatrix();
                     glTranslated(i*25, j*25, 0);
@@ -228,7 +231,7 @@ void Maze::draw(){
                     glPopMatrix();
                     break;
                 case MATRIX_INNER_BOTTOM_LEFT_WALL:
-                    glColor(BLUE);
+                    glColor(WALL_COLOR);
 
                     glPushMatrix();
                     glTranslated(i*25, j*25, 0);
@@ -237,7 +240,7 @@ void Maze::draw(){
                     glPopMatrix();
                     break;
                 case MATRIX_INNER_BOTTOM_RIGHT_WALL:
-                    glColor(BLUE);
+                    glColor(WALL_COLOR);
 
                     glPushMatrix();
                     glTranslated(i*25, j*25, 0);
