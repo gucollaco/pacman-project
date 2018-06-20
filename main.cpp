@@ -38,7 +38,6 @@ void initPacman(){
     GhoBlinky = new Ghost(285, 235, Color(RED), false); //blinky
 
     Pac = new Pacman(350, 170);
-
 }
 
 void init() {
