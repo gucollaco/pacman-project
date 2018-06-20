@@ -116,6 +116,10 @@ void keyboardInt(unsigned char key, int x, int y){
                 Pac->setDirection(MAZE_DOWN);
             } 
             break;
+        case 'Q':
+        case 'q':
+            vida = 0;
+            break;
     }
     glutPostRedisplay();
 }
@@ -175,28 +179,27 @@ void displayFunc() {
 
 
     for(Ghost* g : Ghosts) {
-        test = g->collision(Pac->getX(), Pac->getY(), 16);
-        if (test == 2){
+        if (g->collision(Pac->getX(), Pac->getY(), 16) == 2){
             Pac->reset();
             vida--;
             break;
         }
     }
 
-    if(Labyrinth->getNumberOfPellets() < 1){
+    if(Labyrinth->getNumberOfPellets() < 1 or vida < 1) {
         glPopMatrix();
         glPushMatrix();
-        glText("YOU WIN", 0, 0);
-    } else if(vida < 1){
-        glPopMatrix();
-        glPushMatrix();
+
         glColor(WHITE);
-        glText("YOU LOSE", 0, 0);
-    } else{
-        Pac->draw();
+        if (Labyrinth->getNumberOfPellets() < 1)
+            glText("YOU WIN", 0, 0);
+        else if (vida < 1)
+            glText("YOU LOSE", 0, 0);
+    }else{
+        //Pac->draw();
         Labyrinth->draw();
-        for(Ghost* g : Ghosts)
-            g->draw();
+        //for(Ghost* g : Ghosts)
+            //g->draw();
     }
 
     glutSwapBuffers();
