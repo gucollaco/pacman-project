@@ -97,43 +97,31 @@ void Maze::draw(){
     for(i = 0; i < this->lin; i++){
         for(j = 0; j < this->col; j++){
             switch(this->getValue(i, j)){
-            case 0:
+
+            case MATRIX_COMMON_PELLET:
+            case MATRIX_TURNING_PELLET:
                 glColor(SAND);
                 normal->setPoint(i*25, j*25);
                 normal->draw();
                 break;
-            case 1:
-                glColor(GREEN);
-            case '0':
-            case '1':
-                glColor3ub(230, 220, 175);
-                normal->setPoint(i*25, j*25);
-                normal->draw();
-                break;
-            case '2':
-                glColor3ub(205, 130, 65);
-                power->setPoint(i*25, j*25);
-                power->draw();
-                break;
-            case '3':
-                glColor3ub(0, 0, 255);
-                glPushMatrix();
-                glTranslated(i*25, j*25, 0);
-                glTranslatef(-6.25, 6.25, 0);
-                glutSolidCube(12.5);
-                glTranslatef(0, -12.5, 0);
-                glutSolidCube(12.5);
-                glPopMatrix();
-                break;
-            case 2:
+            case MATRIX_POWER_PELLET:
                 glColor(BROWN_BEIGE);
                 power->setPoint(i*25, j*25);
                 power->draw();
                 break;
-            case 3:
-                glColor(YELLOW);
-            case '4':
-                glColor3ub(0, 0, 255);
+            case MATRIX_TOP_WALL:
+                glColor(BLUE);
+
+                glPushMatrix();
+                glTranslated(i*25, j*25, 0);
+                glTranslatef(-6.25, 6.25, 0);
+                glutSolidCube(12.5);
+                glTranslatef(0, -12.5, 0);
+                glutSolidCube(12.5);
+                glPopMatrix();
+                break;
+            case MATRIX_BOTTOM_WALL:
+                glColor(BLUE);
                 glPushMatrix();
                 glTranslated(i*25, j*25, 0);
                 glTranslatef(6.25, 6.25, 0);
@@ -142,8 +130,9 @@ void Maze::draw(){
                 glutSolidCube(12.5);
                 glPopMatrix();
                 break;
-            case '5':
-                glColor3ub(0, 0, 255);
+            case MATRIX_LEFT_WALL:
+                glColor(BLUE);
+
                 glPushMatrix();
                 glTranslated(i*25, j*25, 0);
                 glTranslatef(6.25, -6.25, 0);
@@ -152,8 +141,9 @@ void Maze::draw(){
                 glutSolidCube(12.5);
                 glPopMatrix();
                 break;
-            case '6':
-                glColor3ub(0, 0, 255);
+            case MATRIX_RIGHT_WALL:
+                glColor(BLUE);
+
                 glPushMatrix();
                 glTranslated(i*25, j*25, 0);
                 glTranslatef(6.25, 6.25, 0);
@@ -162,8 +152,9 @@ void Maze::draw(){
                 glutSolidCube(12.5);
                 glPopMatrix();
                 break;
-            case 'a':
-                glColor3ub(0, 0, 255);
+            case MATRIX_TOP_LEFT_WALL:
+                glColor(BLUE);
+
                 glPushMatrix();
                 glTranslated(i*25, j*25, 0);
                 glTranslatef(6.25, -6.25, 0);
@@ -174,8 +165,9 @@ void Maze::draw(){
                 glutSolidCube(12.5);
                 glPopMatrix();
                 break;
-            case 'b':
-                glColor3ub(0, 0, 255);
+            case MATRIX_TOP_RIGHT_WALL:
+                glColor(BLUE);
+
                 glPushMatrix();
                 glTranslated(i*25, j*25, 0);
                 glTranslatef(6.25, 6.25, 0);
@@ -186,8 +178,9 @@ void Maze::draw(){
                 glutSolidCube(12.5);
                 glPopMatrix();
                 break;
-            case 'c':
-                glColor3ub(0, 0, 255);
+            case MATRIX_BOTTOM_LEFT_WALL:
+                glColor(BLUE);
+
                 glPushMatrix();
                 glTranslated(i*25, j*25, 0);
                 glTranslatef(6.25, 6.25, 0);
@@ -198,8 +191,9 @@ void Maze::draw(){
                 glutSolidCube(12.5);
                 glPopMatrix();
                 break;
-            case 'd':
-                glColor3ub(0, 0, 255);
+            case MATRIX_BOTTOM_RIGHT_WALL:
+                glColor(BLUE);
+
                 glPushMatrix();
                 glTranslated(i*25, j*25, 0);
                 glTranslatef(6.25, -6.25, 0);
@@ -210,32 +204,36 @@ void Maze::draw(){
                 glutSolidCube(12.5);
                 glPopMatrix();
                 break;
-            case 'e':
-                glColor3ub(0, 0, 255);
+            case MATRIX_INNER_TOP_LEFT_WALL:
+                glColor(BLUE);
+
                 glPushMatrix();
                 glTranslated(i*25, j*25, 0);
                 glTranslatef(6.25, 6.25, 0);
                 glutSolidCube(12.5);
                 glPopMatrix();
                 break;
-            case 'f':
-                glColor3ub(0, 0, 255);
+            case MATRIX_INNER_TOP_RIGHT_WALL:
+                glColor(BLUE);
+
                 glPushMatrix();
                 glTranslated(i*25, j*25, 0);
                 glTranslatef(6.25, -6.25, 0);
                 glutSolidCube(12.5);
                 glPopMatrix();
                 break;
-            case 'g':
-                glColor3ub(0, 0, 255);
+            case MATRIX_INNER_BOTTOM_LEFT_WALL:
+                glColor(BLUE);
+
                 glPushMatrix();
                 glTranslated(i*25, j*25, 0);
                 glTranslatef(-6.25, 6.25, 0);
                 glutSolidCube(12.5);
                 glPopMatrix();
                 break;
-            case 'h':
-                glColor3ub(0, 0, 255);
+            case MATRIX_INNER_BOTTOM_RIGHT_WALL:
+                glColor(BLUE);
+
                 glPushMatrix();
                 glTranslated(i*25, j*25, 0);
                 glTranslatef(-6.25, -6.25, 0);

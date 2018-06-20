@@ -133,11 +133,12 @@ void Ghost::draw() {
         glPushMatrix();
             glTranslatef(0.0, 2.0, 0.0);
             //ghost body
-            glColor3ub(this->color.r, this->color.g, this->color.b);
+
             if(this->isReversed)
-                glColor3ub(10, 10, 255);
+                glColor(BLUE);
             else
-                glColor3ub(this->r, this->g, this->b);
+                glColor(this->color);
+
             glPushMatrix();
                 glRotatef(90.0, 1.0, 0.0, 0.0);
                 gluSphere(this->object, 8, 50, 10);
@@ -149,41 +150,8 @@ void Ghost::draw() {
                 gluDisk(this->object, 0, 8, 50, 10);
             glPopMatrix();
 
-            //ghost eyes - white part
-            glColor3ub(255, 255, 255);
-            glPushMatrix();
-                glRotatef(20, 0.0, 1.0, 0.0);
-                glTranslatef(4.0, 4.0, 4.0);
-                gluSphere(this->object, 2, 50, 10);
-            glPopMatrix();
-            glPushMatrix();
-                glRotatef(70, 0.0, 1.0, 0.0);
-                glTranslatef(4.0, 4.0, 4.0);
-                gluSphere(this->object, 2, 50, 10);
-            glPopMatrix();
-
-            if(!isReversed) {
-                //ghost eyes - black part
-                glColor3ub(0, 0, 0);
-                glPushMatrix();
-                    glColor3ub(0, 0, 0);
-                    glRotatef(20, 0.0, 1.0, 0.0);
-                    glTranslatef(4.8, 4.8, 4.8);
-                    gluSphere(object, 1, 50, 10);
-                glPopMatrix();
-                glPushMatrix();
-                    glRotatef(70, 0.0, 1.0, 0.0);
-                    glTranslatef(4.8, 4.8, 4.8);
-                    gluSphere(this->object, 1, 50, 10);
-                glPopMatrix();
-            }
 
             //ghost leg - central leg
-            glColor3ub(this->color.r, this->color.g, this->color.b);
-            if(this->isReversed)
-                glColor3ub(10, 10, 255);
-            else
-                glColor3ub(this->r, this->g, this->b);
             glPushMatrix();
                 glTranslatef(0.0, -12.0, 0.0);
                 glPushMatrix();
@@ -197,11 +165,6 @@ void Ghost::draw() {
             glPopMatrix();
 
             //ghost leg - other legs
-            glColor3ub(this->color.r, this->color.g, this->color.b);
-            if(this->isReversed)
-                glColor3ub(10, 10, 255);
-            else
-                glColor3ub(this->r, this->g, this->b);
             glPushMatrix();
 //                        aniRate = !(ghost.isReversed) ? 1.5 : 3.0;
 //                        glRotatef(animation, 0, 1, 0);
@@ -222,6 +185,36 @@ void Ghost::draw() {
                     i = i + 60;
                 }
             glPopMatrix();
+
+
+            //ghost eyes - white part
+            glColor(WHITE);
+            glPushMatrix();
+                glRotatef(20, 0.0, 1.0, 0.0);
+                glTranslatef(4.0, 4.0, 4.0);
+                gluSphere(this->object, 2, 50, 10);
+            glPopMatrix();
+            glPushMatrix();
+                glRotatef(70, 0.0, 1.0, 0.0);
+                glTranslatef(4.0, 4.0, 4.0);
+                gluSphere(this->object, 2, 50, 10);
+            glPopMatrix();
+
+            if(!isReversed) {
+                //ghost eyes - black part
+                glColor(WHITE);
+                glPushMatrix();
+                    glColor(BLACK);
+                    glRotatef(20, 0.0, 1.0, 0.0);
+                    glTranslatef(4.8, 4.8, 4.8);
+                    gluSphere(object, 1, 50, 10);
+                glPopMatrix();
+                glPushMatrix();
+                    glRotatef(70, 0.0, 1.0, 0.0);
+                    glTranslatef(4.8, 4.8, 4.8);
+                    gluSphere(this->object, 1, 50, 10);
+                glPopMatrix();
+            }
 
         glPopMatrix();
 

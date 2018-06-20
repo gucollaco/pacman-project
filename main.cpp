@@ -47,24 +47,18 @@ void initPacman(){
     char arq[] = "Matrix.txt";
 
     NormalPellet = new Pellet(3.0);
-    PowerPellet = new Pellet(7.0);
-
     PowerPellet = new Pellet(6.0);
+
     Labyrinth = new Maze(arq);
     Labyrinth->show();
     Labyrinth->setPellets(NormalPellet, PowerPellet);
 
-    GhoClyde = new Ghost(225, 285, Color(LIGHT_PINK), false); //clyde
-    GhoPinky = new Ghost(285, 335, Color(ORANGE), false); //pinky
-    GhoInky = new Ghost(285, 285, Color(CYAN), false); //inky
-    GhoBlinky = new Ghost(285, 235, Color(RED), false); //blinky
+    GhoClyde = new Ghost(5*25, 1*25, Color(LIGHT_PINK), false); //clyde
+    GhoPinky = new Ghost(11*25, 13*25, Color(ORANGE), false); //pinky
+    GhoInky = new Ghost(11*25, 11*25, Color(CYAN), false); //inky
+    GhoBlinky = new Ghost(11*5, 9*25, Color(RED), false); //blinky
 
-    Pac = new Pacman(350, 170);
-    GhoClyde = new Ghost(5*25, 25, 255, 165, 0, false); //clyde
-    GhoPinky = new Ghost(11*25, 13*25, 255, 105, 180, false); //pinky
-    GhoInky = new Ghost(11*25, 11*25, 0, 255, 255, false); //inky
-    GhoBlinky = new Ghost(11*25, 9*25, 255, 0, 0, false); //blinky
-    Pac = new Pacman(25*23, 25*13.5, 16);
+    Pac = new Pacman(23*25, 13.5*25, 16);
 }
 
 void init() {
@@ -162,21 +156,8 @@ void displayFunc() {
     Result = convert2.str(); 
     output(150,-180, Result.c_str());
     glRotatef(-50, 1, 0, 0);
-    glRotatef(ry, 0, 1, 0);
-    glRotatef(rz, 0, 0, 1);
-    glTranslated(-240, -240, 0);
-
-    Labyrinth->colisaoPellet(Pac->getX(), Pac->getY(), 8);
-
-    Pac->draw();
-
-    Labyrinth->draw();
-    GhoClyde->draw();
-    GhoPinky->draw();
-    GhoInky->draw();
-    GhoBlinky->draw();
-
-    glRotatef(20, 0, 0, 1);
+    //glRotatef(ry, 0, 1, 0);
+    //glRotatef(20, 0, 0, 1);
     //glTranslated(-240, -240, 0);
     
     glTranslated(-Pac->getX(), -Pac->getY(), 0);
@@ -235,6 +216,7 @@ void displayFunc() {
         GhoInky->draw();
         GhoBlinky->draw();
     }
+
     glutSwapBuffers();
 }
 

@@ -1,16 +1,10 @@
 #ifndef _GHOST_H_
 #define _GHOST_H_
 
-#include <GL/gl.h>
-#include <GL/glu.h>
 #include <GL/glut.h>
-
 #include "Point.h"
 #include "Color.h"
 
-class Ghost : public Point{
-private:
-    Color color;
 #include "Maze.h"
 #include <random>
 #include <ctime>
@@ -21,8 +15,9 @@ private:
 
 class Ghost : public Point{
 private:
-    int r, g, b;
+    Color color;
     int direction;
+
     bool isReversed;
     static std::mt19937 mt;
     static std::uniform_int_distribution<int> dist;
