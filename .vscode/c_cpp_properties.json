@@ -54,7 +54,7 @@
                 "UNICODE",
                 "_UNICODE"
             ],
-            "intelliSenseMode": "msvc-x64",
+            "intelliSenseMode": "clang-x64",
             "browse": {
                 "path": [
                     "${workspaceFolder}",

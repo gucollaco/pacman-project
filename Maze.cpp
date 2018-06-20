@@ -1,4 +1,3 @@
-
 #include <iosfwd>
 #include <sstream>
 #include "Maze.h"
@@ -10,17 +9,15 @@ Maze::Maze(int line, int column){
     power = NULL;
 }
 
-int circ(float x, float y, float r, float x1, float y1){
-    float dx = x - (x1);
-    float dy = y - (y1);
-    return dx*dx + dy*dy <= r*r;
-}
-
 int inside(float value){
     return static_cast<int>((value + 12.5) / 25);
 }
 
-void Maze::colisaoPellet(float x, float y, float r){
+int Maze::getNumberOfPellets(){
+    return this->pellets;
+}
+
+int Maze::pelletCollision(float x, float y, int r){
     int l = inside(x);
     int c = inside(y);
     float x1 = 25*l;
@@ -28,8 +25,18 @@ void Maze::colisaoPellet(float x, float y, float r){
     float dx = x - x1;
     float dy = y - y1;
     if (dx*dx + dy*dy <= r*r){
-        if(this->getValue(l, c) == 0 || this->getValue(l, c) == 2 ){
-            this->setValue(l, c, 9);
+        switch(this->getValue(l, c)){
+            case '0':
+            case '1':
+                this->pellets--;
+                this->setValue(l, c, '9');
+                return NORMAL_PELLET;
+            case '2':
+                this->pellets--;
+                this->setValue(l, c, '9');
+                return POWER_PELLET;
+            default:
+                return NOT_A_PELLET;
         }
     }
 }
@@ -40,8 +47,9 @@ void Maze::colisaoPellet(float x, float y, float r){
 ------------------------------*/
 Maze::Maze(char *path_char){
     int i, j;
+    char valor;
     std::string path(path_char);
-
+    this->pellets = 0;
     FILE *temp = fopen(path.c_str(), "r");
     while(temp == NULL){
         printf("Coundn't find maze file, trying again...\n");
@@ -49,16 +57,21 @@ Maze::Maze(char *path_char){
         std::stringstream ss;
         ss << "../" << path;
         path = ss.str();
-        printf("Trying at <%s>", path);
+        printf("Trying at <%s>\n", path);
 
         temp = fopen(path.c_str(), "r");
     }
 
     fscanf(temp, "%d %d",&i, &j);
     this->alloc(i, j);
+    fscanf(temp, "%c", &valor);
     for(i = 0; i < this->lin; i++){
         for(j = 0; j < this->col; j++){
-            fscanf(temp, "%d", &this->value[i][j]);
+            fscanf(temp, "%c ", &valor);
+            this->value[i][j] = valor;
+            if(valor == '1' || valor == '2' || valor == '0'){
+                this->pellets++;
+            }
         }
     }
     normal = NULL;
@@ -91,9 +104,25 @@ void Maze::draw(){
                 break;
             case 1:
                 glColor(GREEN);
+            case '0':
+            case '1':
+                glColor3ub(230, 220, 175);
+                normal->setPoint(i*25, j*25);
+                normal->draw();
+                break;
+            case '2':
+                glColor3ub(205, 130, 65);
+                power->setPoint(i*25, j*25);
+                power->draw();
+                break;
+            case '3':
+                glColor3ub(0, 0, 255);
                 glPushMatrix();
                 glTranslated(i*25, j*25, 0);
-                glutSolidCube(25);
+                glTranslatef(-6.25, 6.25, 0);
+                glutSolidCube(12.5);
+                glTranslatef(0, -12.5, 0);
+                glutSolidCube(12.5);
                 glPopMatrix();
                 break;
             case 2:
@@ -103,15 +132,127 @@ void Maze::draw(){
                 break;
             case 3:
                 glColor(YELLOW);
+            case '4':
+                glColor3ub(0, 0, 255);
                 glPushMatrix();
                 glTranslated(i*25, j*25, 0);
-                glutSolidCube(25);
+                glTranslatef(6.25, 6.25, 0);
+                glutSolidCube(12.5);
+                glTranslatef(0, -12.5, 0);
+                glutSolidCube(12.5);
+                glPopMatrix();
+                break;
+            case '5':
+                glColor3ub(0, 0, 255);
+                glPushMatrix();
+                glTranslated(i*25, j*25, 0);
+                glTranslatef(6.25, -6.25, 0);
+                glutSolidCube(12.5);
+                glTranslatef(-12.5, 0, 0);
+                glutSolidCube(12.5);
+                glPopMatrix();
+                break;
+            case '6':
+                glColor3ub(0, 0, 255);
+                glPushMatrix();
+                glTranslated(i*25, j*25, 0);
+                glTranslatef(6.25, 6.25, 0);
+                glutSolidCube(12.5);
+                glTranslatef(-12.5, 0, 0);
+                glutSolidCube(12.5);
+                glPopMatrix();
+                break;
+            case 'a':
+                glColor3ub(0, 0, 255);
+                glPushMatrix();
+                glTranslated(i*25, j*25, 0);
+                glTranslatef(6.25, -6.25, 0);
+                glutSolidCube(12.5);
+                glTranslatef(-12.5, 0, 0);
+                glutSolidCube(12.5);
+                glTranslatef(0, 12.5, 0);
+                glutSolidCube(12.5);
+                glPopMatrix();
+                break;
+            case 'b':
+                glColor3ub(0, 0, 255);
+                glPushMatrix();
+                glTranslated(i*25, j*25, 0);
+                glTranslatef(6.25, 6.25, 0);
+                glutSolidCube(12.5);
+                glTranslatef(-12.5, 0, 0);
+                glutSolidCube(12.5);
+                glTranslatef(0, -12.5, 0);
+                glutSolidCube(12.5);
+                glPopMatrix();
+                break;
+            case 'c':
+                glColor3ub(0, 0, 255);
+                glPushMatrix();
+                glTranslated(i*25, j*25, 0);
+                glTranslatef(6.25, 6.25, 0);
+                glutSolidCube(12.5);
+                glTranslatef(0, -12.5, 0);
+                glutSolidCube(12.5);
+                glTranslatef(-12.5, 0, 0);
+                glutSolidCube(12.5);
+                glPopMatrix();
+                break;
+            case 'd':
+                glColor3ub(0, 0, 255);
+                glPushMatrix();
+                glTranslated(i*25, j*25, 0);
+                glTranslatef(6.25, -6.25, 0);
+                glutSolidCube(12.5);
+                glTranslatef(0, 12.5, 0);
+                glutSolidCube(12.5);
+                glTranslatef(-12.5, 0, 0);
+                glutSolidCube(12.5);
+                glPopMatrix();
+                break;
+            case 'e':
+                glColor3ub(0, 0, 255);
+                glPushMatrix();
+                glTranslated(i*25, j*25, 0);
+                glTranslatef(6.25, 6.25, 0);
+                glutSolidCube(12.5);
+                glPopMatrix();
+                break;
+            case 'f':
+                glColor3ub(0, 0, 255);
+                glPushMatrix();
+                glTranslated(i*25, j*25, 0);
+                glTranslatef(6.25, -6.25, 0);
+                glutSolidCube(12.5);
+                glPopMatrix();
+                break;
+            case 'g':
+                glColor3ub(0, 0, 255);
+                glPushMatrix();
+                glTranslated(i*25, j*25, 0);
+                glTranslatef(-6.25, 6.25, 0);
+                glutSolidCube(12.5);
+                glPopMatrix();
+                break;
+            case 'h':
+                glColor3ub(0, 0, 255);
+                glPushMatrix();
+                glTranslated(i*25, j*25, 0);
+                glTranslatef(-6.25, -6.25, 0);
+                glutSolidCube(12.5);
                 glPopMatrix();
                 break;
             }
+            
         }
     }
-    glColor3ub(0, 0, 255);
+    glColor3ub(0, 0, 0);
+    glBegin(GL_POLYGON);
+        glVertex3f(0, 0, -6.25);
+        glVertex3f(0, this->col*25, -6.5);
+        glVertex3f(this->lin*25, this->col*25, -6.5);
+        glVertex3f(this->lin*25, 0, -6.5);
+    glEnd();
 }
 
 void Maze::setValue(int line, int column, int value){
@@ -126,7 +267,7 @@ void Maze::show(){
     int i, j;
     for(i = 0; i < this->lin; i++){
         for(j = 0; j < this->col; j++){
-            printf("%d ", this->getValue(i, j));
+            printf("%c ", (char) this->getValue(i, j));
         }
         printf("\n");
     }
@@ -137,61 +278,45 @@ void Maze::setPellets(Pellet *normal, Pellet *power){
     this->power = power;
 }
 
-bool Maze::canIncrease(Maze *maze, float x, float y, int direcao){
+bool isWall(char c){
+    return (c != '0' && c != '9' && c != '2' && c != '1' && c != '8' && c != '7');
+}
+
+bool Maze::canIncrease(float x, float y, int direcao){
     int l = inside(x);
     int c = inside(y);
-    int v1, v2, v3;
-    if(direcao == MAZE_UP){
-        v1 = maze->getValue(l-1, c+1);
-        v2 = maze->getValue(l, c+1);
-        v3 = maze->getValue(l+1, c+1);
-        if( c < inside(y+7.5) ){
-            if(v2 == 1)
-                return 0;
-            if(v3 == 1 && l < inside(x+7.25) )
-                return 0;
-            if(v1 == 1 && l > inside(x-7.25) )
-                return 0;
-        }
+    int v;
+    switch(direcao){
+        case MAZE_UP:
+            v = this->getValue(l, c+1);
+            if( x/25 != (int)x/25 )
+                return false;
+            if( c < inside(y+13) &&  isWall(v))
+                return false;
+            break;
+        case MAZE_DOWN:
+            v = this->getValue(l, c-1);
+            if( x/25 != (int)x/25 )
+                return false;
+            if( c > inside(y-13) && isWall(v) )
+                return false;
+            break;
+        case MAZE_LEFT:
+            v = this->getValue(l-1, c);
+            if( y/25 != (int)y/25 )
+                return false;
+            if( l > inside(x-13) && isWall(v) )
+                return false;
+            break;
+        case MAZE_RIGHT:
+            v = this->getValue(l+1, c);
+            if( y/25 != (int)y/25 )
+                return false;
+            if( l < inside(x+13) && isWall(v) )
+                return false;
+            break;
+        default:
+            return false;
     }
-    if(direcao == MAZE_DOWN){
-        v1 = maze->getValue(l-1, c-1);
-        v2 = maze->getValue(l, c-1);
-        v3 = maze->getValue(l+1, c-1);
-        if( c > inside(y-7.6) ){
-            if(v2 == 1)
-                return 0;
-            if(v3 == 1 && l < inside(x+7.25) )
-                return 0;
-            if(v1 == 1 && l > inside(x-7.25) )
-                return 0;
-        }
-    }
-    if(direcao == MAZE_LEFT){
-        v1 = maze->getValue(l-1, c-1);
-        v2 = maze->getValue(l-1, c);
-        v3 = maze->getValue(l-1, c+1);
-        if( l > inside(x-7.6) ){
-            if(v2 == 1)
-                return 0;
-            if(v3 == 1 && c < inside(y+7.25) )
-                return 0;
-            if(v1 == 1 && c > inside(y-7.25) )
-                return 0;
-        }
-    }
-    if(direcao == MAZE_RIGHT){
-        v1 = maze->getValue(l+1, c-1);
-        v2 = maze->getValue(l+1, c);
-        v3 = maze->getValue(l+1, c+1);
-        if( l < inside(x+7.6) ){
-            if(v2 == 1)
-                return 0;
-            if(v3 == 1 && c < inside(y+7.25) )
-                return 0;
-            if(v1 == 1 && c > inside(y-7.25) )
-                return 0;
-        }
-    }
-    return 1;
+    return true;
 }

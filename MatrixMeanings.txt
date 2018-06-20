@@ -1,5 +1,18 @@
 0 - common pellet
-1 - blue cube
+1 - commom pellet + turning point
 2 - power pellet
-3 - yellow cube
+3 - top wall
+4 - bottom wall
+5 - left wall
+6 - right wall
+7 - telleport tile
+8 - turning point
 9 - blank space
+a - top-left wall
+b - top-right wall
+c - bottom-left wall
+d - bottom-right wall
+e - inner top-left wall
+f - inner top-right wall
+g - inner bottom-left wall
+h - inner bottom-right wall

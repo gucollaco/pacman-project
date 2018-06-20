@@ -1,8 +1,9 @@
-
 #include "Point.h"
 
 Point::Point(float x, float y){
     this->setPoint(x, y);
+    this->resetX = x;
+    this->resetY = y;
 }
 void Point::setX(float x){
     this->x = x;
@@ -19,4 +20,15 @@ float Point::getX(){
 }
 float Point::getY(){
     return this->y;
+}
+void Point::increaseX(float x){
+    this->x += x;
+}
+void Point::increaseY(float y){
+    this->y += y;
+}
+
+void Point::reset(){
+    this->x = this->resetX;
+    this->y = this->resetY;
 }

@@ -3,7 +3,7 @@
 
 class Point {
     private:
-        float x, y;
+        float x, y, resetX, resetY;
     public:
         Point(float x, float y);
         void setX(float x);
@@ -11,6 +11,9 @@ class Point {
         void setPoint(float x, float y);
         float getX();
         float getY();
+        void increaseX(float x);
+        void increaseY(float y);
+        void reset();
 };
 
 #endif
