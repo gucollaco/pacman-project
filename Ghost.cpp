@@ -7,14 +7,14 @@ Ghost::Ghost(int valX, int valY, int valR, int valG, int valB, bool rev) : Point
     this->color.b = valB;
     this->isReversed = rev;
     this->object = gluNewQuadric();
-    this->speed = 12.5;
+    this->speed = 6.25;
 }
 
 Ghost::Ghost(int valX, int valY, Color valColor, bool rev) : Point(valX, valY) {
     this->color = valColor;
     this->isReversed = rev;
     this->object = gluNewQuadric();
-    this->speed = 12.5;
+    this->speed = 6.25;
 }
 
 Ghost::Ghost(Point valPoint, int valR, int valG, int valB, bool rev) : Point(valPoint.getX(), valPoint.getY()) {
@@ -23,14 +23,14 @@ Ghost::Ghost(Point valPoint, int valR, int valG, int valB, bool rev) : Point(val
     this->color.b = valB;
     this->isReversed = rev;
     this->object = gluNewQuadric();
-    this->speed = 12.5;
+    this->speed = 6.25;
 }
 
 Ghost::Ghost(Point valPoint, Color valColor, bool rev) : Point(valPoint.getX(), valPoint.getY()) {
     this->color = valColor;
     this->isReversed = rev;
     this->object = gluNewQuadric();
-    this->speed = 12.5;
+    this->speed = 6.25;
 }
 
 void Ghost::setSpeed(float speed){
@@ -54,8 +54,8 @@ bool Ghost::walk(Maze *maze){
     char value;
     float x = this->getX();
     float y = this->getY();
-    int l = inside2(x, this->speed);
-    int c = inside2(y, this->speed);
+    int l = inside2(x);
+    int c = inside2(y);
     if( x/25 != (int)x/25 || y/25 != (int)y/25 )
         decision = false;
     if( decision ){

@@ -30,8 +30,8 @@ void Pacman::walk(Maze *maze){
     char value;
     float x = this->getX();
     float y = this->getY();
-    int l = inside3(x, this->speed);
-    int c = inside3(y, this->speed);
+    int l = inside3(x);
+    int c = inside3(y);
     if( x/25 != (int)x/25 || y/25 != (int)y/25 )
         decision = false;
     if(decision){

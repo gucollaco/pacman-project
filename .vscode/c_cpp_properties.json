@@ -47,7 +47,10 @@
             "includePath": [
                 "${workspaceFolder}",
                 "C:/MinGW/include",
-                "C:/MinGW/x86_64-w64-mingw32/include"
+                "C:/MinGW/x86_64-w64-mingw32/include",
+                "C:/MinGW/x86_64-w64-mingw32/include",
+                "C:/MinGW/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++",
+                "C:/MinGW/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1"
             ],
             "defines": [
                 "_DEBUG",
@@ -65,7 +68,7 @@
                 "databaseFilename": ""
             },
             "cStandard": "c11",
-            "cppStandard": "c++17"
+            "cppStandard": "c++11"
         }
     ],
     "version": 4

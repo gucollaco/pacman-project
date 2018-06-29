@@ -106,7 +106,6 @@ void Maze::draw(){
                 case MATRIX_COMMON_PELLET:
                 case MATRIX_TURNING_PELLET:
                     glColor(PELLET_COLOR);
-
                     normal->setPoint(i*25, j*25);
                     normal->draw();
                     break;

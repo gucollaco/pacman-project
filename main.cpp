@@ -3,24 +3,26 @@
 #include <list>
 #include <ctime>
 #include <sstream>
+#include <windows.h>
 
 #include "Maze.h"
 #include "Ghost.h"
 #include "Pacman.h"
 #include "Random.h"
 #include "glh.h"
-//#include "Maze.cpp"
-//#include "Ghost.cpp"
-//#include "Point.cpp"
-//#include "Pacman.cpp"
-//#include "Pellet.cpp"
-
+#include "Maze.cpp"
+#include "Ghost.cpp"
+#include "Point.cpp"
+#include "Pacman.cpp"
+#include "Pellet.cpp"
+#include "glh.cpp"
+#include "Random.cpp"
+#include "Color.cpp"
 
 int vida = 3;
 double rx = 0, ry = 0, rz = 0;
-float zoom = 600;
+float zoom = 120;
 time_t tempo = 0;
-
 Maze *Labyrinth;
 
 Pellet *NormalPellet;
@@ -39,8 +41,7 @@ const GLfloat light_diffuse[]  = { 2.0f, 2.0f, 2.0f, 2.0f };
 const GLfloat light_specular[] = { 2.0f, 2.0f, 2.0f, 2.0f };
 const GLfloat light_position[] = { 3.0f, 7.0f, 7.0f, 0.0f };
 
-const int FRAME_RATE = 60;
-
+const int FRAME_RATE = 50;
 
 void initPacman(){
     char arq[] = "Matrix.txt";
@@ -55,7 +56,7 @@ void initPacman(){
     GhoClyde = new Ghost(5*25, 1*25, Color(LIGHT_PINK), false); //clyde
     GhoPinky = new Ghost(11*25, 13*25, Color(ORANGE), false); //pinky
     GhoInky = new Ghost(11*25, 11*25, Color(CYAN), false); //inky
-    GhoBlinky = new Ghost(11*5, 9*25, Color(RED), false); //blinky
+    GhoBlinky = new Ghost(11*25, 11*25, Color(RED), false); //blinky
 
     Ghosts.push_back(GhoClyde);
     Ghosts.push_back(GhoPinky);
@@ -64,8 +65,8 @@ void initPacman(){
 
     Pac = new Pacman(23*25, 13.5*25, 16);
 
-    //Pac->setSpeed(8.0);
-    for(Ghost* g : Ghosts) g->setSpeed(8.0);
+    Pac->setSpeed(6.25);
+    for(Ghost* g : Ghosts) g->setSpeed(6.25);
 }
 
 void init() {
@@ -88,6 +89,38 @@ void init() {
     glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
     Random::seed(1);
+}
+
+bool key_pressed(int key) {
+   return (GetAsyncKeyState(key) & 0x8000 != 0);
+}
+
+#define VK_KEY_A 0x41
+#define VK_KEY_D 0x44
+#define VK_KEY_S 0x53
+#define VK_KEY_W 0x57
+
+void testKeys(){
+    if(key_pressed(VK_KEY_D)){
+        if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_RIGHT)){
+            Pac->setDirection(MAZE_RIGHT);
+        } 
+    }
+    if(key_pressed(VK_KEY_A)){
+        if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_LEFT)){
+            Pac->setDirection(MAZE_LEFT);
+        }
+    }
+    if(key_pressed(VK_KEY_W)){
+        if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_UP)){
+            Pac->setDirection(MAZE_UP);
+        }
+    }
+    if(key_pressed(VK_KEY_S)){
+        if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_DOWN)){
+            Pac->setDirection(MAZE_DOWN);
+        }
+    }
 }
 
 void keyboardInt(unsigned char key, int x, int y){
@@ -143,9 +176,10 @@ void specialInt(int key, int x, int y){
 }
 
 void timerFunc(int value){
+    testKeys();
     Pac->walk(Labyrinth);
     for(Ghost* g : Ghosts) g->walk(Labyrinth);
-
+    testKeys();
     glutPostRedisplay();
     glutTimerFunc(FRAME_RATE, timerFunc, value);
 }
@@ -153,13 +187,6 @@ void timerFunc(int value){
 void displayFunc() {
     int test;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //limpa o buffer
-
-    glColor(BLUE);
-    glPopMatrix();
-    glPushMatrix();
-
-    glText(format("PELLETS: %d", Labyrinth->getNumberOfPellets()), -180, -180);
-    glText(format("LIFE: %d", vida), 150, -180);
 
     glRotatef(-50, 1, 0, 0);
     //glRotatef(ry, 0, 1, 0);
@@ -196,11 +223,16 @@ void displayFunc() {
         else if (vida < 1)
             glText("YOU LOSE", 0, 0);
     }else{
-        //Pac->draw();
+        Pac->draw();
         Labyrinth->draw();
-        //for(Ghost* g : Ghosts)
-            //g->draw();
+        for(Ghost* g : Ghosts)
+            g->draw();
     }
+    glPopMatrix();
+    glPushMatrix();
+    glColor(RED);
+    glText(format("PELLETS: %d", Labyrinth->getNumberOfPellets()), 80, -115);
+    glText(format("LIFE: %d", vida), -115, -115);
 
     glutSwapBuffers();
 }
