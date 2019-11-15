@@ -8,17 +8,12 @@
 
 #include "Maze.h"
 #include "Ghost.h"
+#include "Point.h"
 #include "Pacman.h"
-#include "Random.h"
+#include "Pellet.h"
 #include "glh.h"
-#include "Maze.cpp"
-#include "Ghost.cpp"
-#include "Point.cpp"
-#include "Pacman.cpp"
-#include "Pellet.cpp"
-#include "glh.cpp"
-#include "Random.cpp"
-#include "Color.cpp"
+#include "Random.h"
+#include "Color.h"
 
 int life = 3;
 double rx = 0, ry = 0, rz = 0;

@@ -62,7 +62,7 @@ Maze::Maze(char *path_char){
         std::stringstream ss;
         ss << "../" << path;
         path = ss.str();
-        printf("Trying at <%s>\n", path);
+        printf("Trying at <%s>\n", path_char);
 
         temp = fopen(path.c_str(), "r");
     }

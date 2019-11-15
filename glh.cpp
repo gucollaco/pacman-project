@@ -1,5 +1,5 @@
 //
-// Created by dsalexan on 20/06/2018.
+// Auxiliary file created by dsalexan on 20/06/2018.
 //
 
 #include <cstdarg>
