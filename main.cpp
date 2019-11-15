@@ -3,7 +3,8 @@
 #include <list>
 #include <ctime>
 #include <sstream>
-#include <windows.h>
+
+// #include <windows.h> // uncomment if on windows
 
 #include "Maze.h"
 #include "Ghost.h"
@@ -19,7 +20,7 @@
 #include "Random.cpp"
 #include "Color.cpp"
 
-int vida = 3;
+int life = 3;
 double rx = 0, ry = 0, rz = 0;
 float zoom = 120;
 time_t tempo = 0;
@@ -44,19 +45,19 @@ const GLfloat light_position[] = { 3.0f, 7.0f, 7.0f, 0.0f };
 const int FRAME_RATE = 50;
 
 void initPacman(){
-    char arq[] = "Matrix.txt";
+    char file[] = "matrix/sample.txt";
 
     NormalPellet = new Pellet(3.0);
     PowerPellet = new Pellet(6.0);
 
-    Labyrinth = new Maze(arq);
+    Labyrinth = new Maze(file);
     Labyrinth->show();
     Labyrinth->setPellets(NormalPellet, PowerPellet);
 
-    GhoClyde = new Ghost(5*25, 1*25, Color(LIGHT_PINK), false); //clyde
-    GhoPinky = new Ghost(11*25, 13*25, Color(ORANGE), false); //pinky
-    GhoInky = new Ghost(11*25, 11*25, Color(CYAN), false); //inky
-    GhoBlinky = new Ghost(11*25, 11*25, Color(RED), false); //blinky
+    GhoClyde = new Ghost(5*25, 1*25, Color(LIGHT_PINK), false); // clyde
+    GhoPinky = new Ghost(11*25, 13*25, Color(ORANGE), false); // pinky
+    GhoInky = new Ghost(11*25, 11*25, Color(CYAN), false); // inky
+    GhoBlinky = new Ghost(11*25, 11*25, Color(RED), false); // blinky
 
     Ghosts.push_back(GhoClyde);
     Ghosts.push_back(GhoPinky);
@@ -70,12 +71,12 @@ void initPacman(){
 }
 
 void init() {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); //define a cor de fundo
-    glEnable(GL_DEPTH_TEST); //habilita o teste de profundidade
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // define a cor de fundo
+    glEnable(GL_DEPTH_TEST); // habilita o teste de profundidade
 
-    glMatrixMode(GL_MODELVIEW); //define que a matrix � a de proje��o
-    glLoadIdentity(); //carrega a matrix de identidade
-    glOrtho(-zoom, zoom, -zoom, zoom, -zoom, zoom); //define uma proje��o ortogonal
+    glMatrixMode(GL_MODELVIEW); // define que a matrix � a de proje��o
+    glLoadIdentity(); // carrega a matrix de identidade
+    glOrtho(-zoom, zoom, -zoom, zoom, -zoom, zoom); // define uma proje��o ortogonal
     glPushMatrix();
     
     glEnable(GL_LIGHT0);
@@ -91,37 +92,39 @@ void init() {
     Random::seed(1);
 }
 
-bool key_pressed(int key) {
-   return (GetAsyncKeyState(key) & 0x8000 != 0);
-}
+/* Uncomment bellow code if on windows */
 
-#define VK_KEY_A 0x41
-#define VK_KEY_D 0x44
-#define VK_KEY_S 0x53
-#define VK_KEY_W 0x57
+// bool key_pressed(int key) {
+//    return (GetAsyncKeyState(key) & 0x8000 != 0);
+// }
 
-void testKeys(){
-    if(key_pressed(VK_KEY_D)){
-        if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_RIGHT)){
-            Pac->setDirection(MAZE_RIGHT);
-        } 
-    }
-    if(key_pressed(VK_KEY_A)){
-        if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_LEFT)){
-            Pac->setDirection(MAZE_LEFT);
-        }
-    }
-    if(key_pressed(VK_KEY_W)){
-        if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_UP)){
-            Pac->setDirection(MAZE_UP);
-        }
-    }
-    if(key_pressed(VK_KEY_S)){
-        if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_DOWN)){
-            Pac->setDirection(MAZE_DOWN);
-        }
-    }
-}
+// #define VK_KEY_A 0x41
+// #define VK_KEY_D 0x44
+// #define VK_KEY_S 0x53
+// #define VK_KEY_W 0x57
+
+// void testKeys(){
+//     if(key_pressed(VK_KEY_D)){
+//         if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_RIGHT)){
+//             Pac->setDirection(MAZE_RIGHT);
+//         } 
+//     }
+//     if(key_pressed(VK_KEY_A)){
+//         if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_LEFT)){
+//             Pac->setDirection(MAZE_LEFT);
+//         }
+//     }
+//     if(key_pressed(VK_KEY_W)){
+//         if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_UP)){
+//             Pac->setDirection(MAZE_UP);
+//         }
+//     }
+//     if(key_pressed(VK_KEY_S)){
+//         if(Labyrinth->canIncrease(Pac->getX(), Pac->getY(), MAZE_DOWN)){
+//             Pac->setDirection(MAZE_DOWN);
+//         }
+//     }
+// }
 
 void keyboardInt(unsigned char key, int x, int y){
     switch(key){
@@ -151,7 +154,7 @@ void keyboardInt(unsigned char key, int x, int y){
             break;
         case 'Q':
         case 'q':
-            vida = 0;
+            life = 0;
             break;
     }
     glutPostRedisplay();
@@ -176,22 +179,22 @@ void specialInt(int key, int x, int y){
 }
 
 void timerFunc(int value){
-    testKeys();
+    // testKeys();  // uncomment if on windows
     Pac->walk(Labyrinth);
     for(Ghost* g : Ghosts) g->walk(Labyrinth);
-    testKeys();
+    // testKeys();  // uncomment if on windows
     glutPostRedisplay();
     glutTimerFunc(FRAME_RATE, timerFunc, value);
 }
 
 void displayFunc() {
     int test;
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //limpa o buffer
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // cleans the buffer
 
     glRotatef(-50, 1, 0, 0);
-    //glRotatef(ry, 0, 1, 0);
-    //glRotatef(20, 0, 0, 1);
-    //glTranslated(-240, -240, 0);
+    // glRotatef(ry, 0, 1, 0);
+    // glRotatef(20, 0, 0, 1);
+    // glTranslated(-240, -240, 0);
     
     glTranslated(-Pac->getX(), -Pac->getY(), 0);
     if( POWER_PELLET == Labyrinth->pelletCollision(Pac->getX(), Pac->getY(), Pac->getRadius())){
@@ -208,19 +211,19 @@ void displayFunc() {
     for(Ghost* g : Ghosts) {
         if (g->collision(Pac->getX(), Pac->getY(), 16) == 2){
             Pac->reset();
-            vida--;
+            life--;
             break;
         }
     }
 
-    if(Labyrinth->getNumberOfPellets() < 1 or vida < 1) {
+    if(Labyrinth->getNumberOfPellets() < 1 or life < 1) {
         glPopMatrix();
         glPushMatrix();
 
         glColor(WHITE);
         if (Labyrinth->getNumberOfPellets() < 1)
             glText("YOU WIN", 0, 0);
-        else if (vida < 1)
+        else if (life < 1)
             glText("YOU LOSE", 0, 0);
     }else{
         Pac->draw();
@@ -232,7 +235,7 @@ void displayFunc() {
     glPushMatrix();
     glColor(RED);
     glText(format("PELLETS: %d", Labyrinth->getNumberOfPellets()), 80, -115);
-    glText(format("LIFE: %d", vida), -115, -115);
+    glText(format("LIFE: %d", life), -115, -115);
 
     glutSwapBuffers();
 }
