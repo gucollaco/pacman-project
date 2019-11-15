@@ -1,11 +1,6 @@
-//
-// Auxiliary file created by dsalexan on 20/06/2018.
-//
-
 #include <cstdarg>
 #include <cstring>
 #include "glh.h"
-
 
 /* AUXILIAR CODE */
 std::string format(const std::string fmt_str, ...){

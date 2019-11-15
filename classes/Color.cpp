@@ -1,8 +1,5 @@
-//
-// Created by dsalexan on 08/06/2018.
-//
-
 #include "Color.h"
+
 void glColor(Color c){
     glColor4ub(static_cast<GLubyte>(c.r), static_cast<GLubyte>(c.g), static_cast<GLubyte>(c.b), static_cast<GLubyte>(c.a));
 }

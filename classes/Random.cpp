@@ -1,7 +1,3 @@
-//
-// Created by dsalexan on 20/06/2018.
-//
-
 #include <cstdlib>
 #include "Random.h"
 

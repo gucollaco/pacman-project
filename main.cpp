@@ -6,14 +6,14 @@
 
 // #include <windows.h> // uncomment if on windows
 
-#include "Maze.h"
-#include "Ghost.h"
-#include "Point.h"
-#include "Pacman.h"
-#include "Pellet.h"
-#include "glh.h"
-#include "Random.h"
-#include "Color.h"
+#include "headers/Maze.h"
+#include "headers/Ghost.h"
+#include "headers/Point.h"
+#include "headers/Pacman.h"
+#include "headers/Pellet.h"
+#include "headers/glh.h"
+#include "headers/Random.h"
+#include "headers/Color.h"
 
 int life = 3;
 double rx = 0, ry = 0, rz = 0;
